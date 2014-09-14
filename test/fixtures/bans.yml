@@ -1,7 +1,19 @@
 one_day:
-  date: <%= 3.days.ago.to_formatted_s(:db) %>
+  date: <%= 10.days.ago.to_formatted_s(:db) %>
   duration: 1
+  user: amshaegar
+
+three_days_ongoing:
+  date: <%= 5.day.ago.to_formatted_s(:db) %>
+  duration: 3
+  user: amshaegar
+
+three_days_ongoing:
+  date: <%= 1.day.ago.to_formatted_s(:db) %>
+  duration: 7
+  user: amshaegar
 
 three_days_ongoing:
   date: <%= 1.day.ago.to_formatted_s(:db) %>
   duration: 3
+  user: humpel
