@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+amshaegar:
+  name: AmShaegar
+
+humpel:
+  name: Humpelstielzche
+
+smurf_1:
+  name: AmShaegarII
+  main: amshaegar
+
+smurf_2:
+  name: AmShaegarIII
+  main: amshaegar
