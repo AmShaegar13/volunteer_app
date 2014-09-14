@@ -18,7 +18,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal user, user.smurfs.sample.main
   end
 
-  test 'should set smurf-main association' do
+  test 'should set smurf-main association as main' do
     user = users(:humpel)
     smurf = users(:smurf_new)
 
@@ -27,7 +27,23 @@ class UserTest < ActiveSupport::TestCase
 
     user.smurfs << smurf
 
-    assert user.smurfs.size == 1
+    assert_equal 1, user.smurfs.size
+    assert_equal user, smurf.main
+  end
+
+  test 'should set smurf-main association as smurf' do
+    user = users(:humpel)
+    smurf = users(:smurf_new)
+
+    assert_equal 0, user.smurfs.size
+    assert_nil smurf.main
+
+    smurf.main = user
+    smurf.save!
+
+    user.reload
+
+    assert_equal 1, user.smurfs.size
     assert_equal user, smurf.main
   end
 
