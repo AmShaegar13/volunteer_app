@@ -1,9 +1,7 @@
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+one_day:
+  date: <%= 3.days.ago %>
+  duration: 1
 
-one:
-  date: MyString
-  duration: MyString
-
-two:
-  date: MyString
-  duration: MyString
+three_days_ongoing:
+  date: <%= 1.day.ago %>
+  duration: 3

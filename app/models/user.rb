@@ -3,4 +3,6 @@ class User < ActiveRecord::Base
   belongs_to :main, class_name: 'User'
 
   has_many :bans
+
+  validates :name, presence: true
 end
