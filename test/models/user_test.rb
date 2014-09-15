@@ -60,7 +60,7 @@ class UserTest < ActiveSupport::TestCase
     assert_equal User, users.first.class
 
     dates = users.map do |user|
-      Ban.where(user: user).order(date: :desc).first.date
+      Ban.where(user: user).order(created_at: :desc).first.created_at
     end
 
     dates.inject do |memo, element|

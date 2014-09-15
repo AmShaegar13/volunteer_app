@@ -7,6 +7,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true
 
   def self.ordered_by_end_of_ban(limit = 15)
-    Ban.order('date + INTERVAL duration DAY DESC').limit(limit).map { |ban| ban.user }
+    Ban.order('created_at + INTERVAL duration DAY DESC').limit(limit).map { |ban| ban.user }
   end
 end
