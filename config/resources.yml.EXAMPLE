@@ -1,0 +1,3 @@
+riot_api:
+  base_url: 'https://euw.api.pvp.net/api/lol/euw/v1.4/'
+  api_key:

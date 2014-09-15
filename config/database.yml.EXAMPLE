@@ -3,7 +3,7 @@ default: &default
   encoding: utf8
   pool: 10
   reconnect: true
-  host:
+  host: localhost
 
 development:
   <<: *default
@@ -19,7 +19,6 @@ test:
 
 production:
   <<: *default
-  host: localhost
   database: volunteer
   username: volunteer
   password:
