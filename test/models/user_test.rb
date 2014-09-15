@@ -53,21 +53,4 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_match /Name can't be blank/, ex.message
   end
-
-  test 'should return users ordered by end of ban' do
-    users = User.ordered_by_end_of_ban
-
-    assert_not_equal 0, users.size
-    assert_equal User, users.first.class
-
-    dates = users.map do |user|
-      Ban.where(user: user).order(created_at: :desc).first.created_at
-    end
-
-    dates.inject do |memo, element|
-      # check order
-      assert memo > element
-      element
-    end
-  end
 end

@@ -76,4 +76,19 @@ class BanTest < ActiveSupport::TestCase
     end
     assert_match /Link is invalid/, ex.message
   end
+
+  test 'should return bans ordered by end' do
+    bans = Ban.ordered_by_end
+
+    assert_not_equal 0, bans.size
+    assert_equal Ban, bans.first.class
+
+    dates = bans.map(&:created_at)
+
+    dates.inject do |memo, element|
+      # check order
+      assert memo > element
+      element
+    end
+  end
 end

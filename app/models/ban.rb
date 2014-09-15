@@ -11,4 +11,8 @@ class Ban < ActiveRecord::Base
   def end
     created_at + duration.days
   end
+
+  def self.ordered_by_end
+    Ban.order('created_at + INTERVAL duration DAY DESC')
+  end
 end
