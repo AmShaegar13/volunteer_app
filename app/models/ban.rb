@@ -4,5 +4,7 @@ class Ban < ActiveRecord::Base
   validates :duration, presence: true
   validates :user, presence: true
   validates :reason, presence: true
-  validates :link, presence: true
+  validates :link, presence: true, format: {
+      with: %r#http://forums\.(na|euw|eune)\.leagueoflegends\.com/board/showthread.php\?[tp]=\d+.*#
+  }
 end

@@ -48,9 +48,10 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should fail to create user without name' do
-    assert_raises ActiveRecord::RecordInvalid do
+    ex = assert_raises ActiveRecord::RecordInvalid do
       User.create!
     end
+    assert_match /Name can't be blank/, ex.message
   end
 
   test 'should return users ordered by end of ban' do
