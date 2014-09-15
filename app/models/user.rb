@@ -1,8 +1,7 @@
 class User < ActiveRecord::Base
   has_many :smurfs, class_name: 'User', foreign_key: 'main_id'
   belongs_to :main, class_name: 'User'
-
-  has_many :bans
+  has_many :bans, -> { order 'created_at DESC' }
 
   validates :name, presence: true
 

@@ -1,0 +1,19 @@
+<table border="1">
+  <tr>
+    <th>Summoner</th><th>Reason</th><th>Ban duration</th><th>Ban ends</th>
+  </tr>
+<% @users.each do |user| -%>
+  <% ban = user.bans.first -%>
+  <tr>
+    <td>
+      <a href="http://forums.euw.leagueoflegends.com/board/search.php?do=process&amp;searchuser=<%= user.name %>&amp;exactname=1&amp;showposts=1"><%= user.name -%></a>
+    </td><td>
+      <a href="<%= ban.link %>"><%= ban.reason %></a>
+    </td><td>
+      <%= ban.duration %> days
+    </td><td>
+      <%= ban.end %>
+    </td>
+  </tr>
+<% end -%>
+</table>
