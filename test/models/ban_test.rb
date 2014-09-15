@@ -1,12 +1,22 @@
 require 'test_helper'
 
 class BanTest < ActiveSupport::TestCase
-  test 'should create ban even without date' do
-    pp ban = Ban.create!(
+  test 'should create ban with link to thread' do
+    ban = Ban.create!(
         duration: 1,
         user: users(:amshaegar),
         reason: 'flame',
         link: 'http://forums.euw.leagueoflegends.com/board/showthread.php?t=123456'
+    )
+    assert users(:amshaegar).bans.include?(ban)
+  end
+
+  test 'should create ban with link to post and stuff' do
+    ban = Ban.create!(
+        duration: 1,
+        user: users(:amshaegar),
+        reason: 'flame',
+        link: 'http://forums.euw.leagueoflegends.com/board/showthread.php?p=123456&highlight=search_keyword#post123456'
     )
     assert users(:amshaegar).bans.include?(ban)
   end
