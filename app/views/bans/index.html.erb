@@ -5,15 +5,10 @@
 <% @bans.each do |ban| -%>
   <% user = ban.user -%>
   <tr>
-    <td>
-      <%= link_to user.name, user %>
-    </td><td>
-      <a href="<%= ban.link %>"><%= ban.reason %></a>
-    </td><td>
-      <%= ban.duration %> days
-    </td><td>
-      <%= ban.end %>
-    </td>
+    <td><%= link_to user.name, user %></td>
+    <td><a href="<%= ban.link %>"><%= ban.reason %></a></td>
+    <td><%= ban.duration %> days</td>
+    <td><%= ban.end %></td>
   </tr>
 <% end -%>
 </table>
