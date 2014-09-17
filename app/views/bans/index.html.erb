@@ -6,7 +6,7 @@
   <% user = ban.user -%>
   <tr>
     <td>
-      <a href="http://forums.euw.leagueoflegends.com/board/search.php?do=process&amp;searchuser=<%= user.name %>&amp;exactname=1&amp;showposts=1"><%= user.name %></a>
+      <%= link_to user.name, user %>
     </td><td>
       <a href="<%= ban.link %>"><%= ban.reason %></a>
     </td><td>
@@ -17,3 +17,5 @@
   </tr>
 <% end -%>
 </table>
+<br/>
+<%= link_to 'New Ban', new_ban_path %>

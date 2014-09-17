@@ -1,6 +1,6 @@
 <%= form_for @ban do |f| %>
   <%= f.fields_for :user do |fu| %>
-    <%= fu.collection_select(:id, User.all, :id, :name) %><br/>
+    <%= fu.collection_select(:id, User.all.order(id: :desc), :id, :name) %><br/>
     - OR -<br/>
     <%= fu.text_field :name %><br/>
   <% end -%>
