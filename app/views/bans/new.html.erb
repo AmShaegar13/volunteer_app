@@ -1,0 +1,9 @@
+<%= form_for @ban do |f| %>
+  <%= f.number_field :duration, in: -1..14 %><br/>
+  <%= f.text_field :reason %><br/>
+  <%= f.text_field :link %><br/>
+  <%= f.fields_for :user do |fu| %>
+    <%= fu.text_field :name %><br/>
+  <% end -%>
+  <%= f.submit 'Create' %><br/>
+<% end -%>
