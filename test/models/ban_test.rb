@@ -43,6 +43,18 @@ class BanTest < ActiveSupport::TestCase
     assert_match /Duration can't be blank/, ex.message
   end
 
+  test 'should fail to create ban with invalid duration' do
+    ex = assert_raises ActiveRecord::RecordInvalid do
+      Ban.create!(
+          duration: 13,
+          user: users(:amshaegar),
+          reason: 'flame',
+          link: 'http://forums.euw.leagueoflegends.com/board/showthread.php?t=123456'
+      )
+    end
+    assert_match /Duration is not included in the list/, ex.message
+  end
+
   test 'should fail to create ban without reason' do
     ex = assert_raises ActiveRecord::RecordInvalid do
       Ban.create!(
@@ -83,12 +95,16 @@ class BanTest < ActiveSupport::TestCase
     assert_not_equal 0, bans.size
     assert_equal Ban, bans.first.class
 
-    dates = bans.map(&:created_at)
+    dates = bans.map(&:ends)
 
     dates.inject do |memo, element|
       # check order
       assert memo > element
       element
     end
+  end
+
+  test 'ban should be permanent' do
+    assert bans(:permanent).permanent?
   end
 end

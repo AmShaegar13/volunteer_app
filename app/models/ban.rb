@@ -1,7 +1,9 @@
 class Ban < ActiveRecord::Base
   belongs_to :user
 
-  validates :duration, presence: true
+  validates :duration, presence: true, inclusion: {
+      in: [1, 3, 7, 14, -1]
+  }
   validates :user, presence: true
   validates :reason, presence: true
   validates :link, presence: true, format: {
@@ -14,6 +16,10 @@ class Ban < ActiveRecord::Base
 
   def active?
     ends > Time.now
+  end
+
+  def permanent?
+    duration == -1
   end
 
   def self.ordered_by_end

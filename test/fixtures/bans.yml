@@ -3,8 +3,8 @@ one_day:
   duration: 1
   user: amshaegar
 
-three_days_ongoing:
-  created_at: <%= 5.day.ago.to_formatted_s(:db) %>
+three_days:
+  created_at: <%= 6.day.ago.to_formatted_s(:db) %>
   duration: 3
   user: amshaegar
 
@@ -13,7 +13,12 @@ three_days_ongoing:
   duration: 7
   user: amshaegar
 
-three_days_ongoing:
-  created_at: <%= 1.day.ago.to_formatted_s(:db) %>
+three_days:
+  created_at: <%= 5.day.ago.to_formatted_s(:db) %>
   duration: 3
+  user: humpel
+
+permanent:
+  created_at: <%= 2.day.ago.to_formatted_s(:db) %>
+  duration: -1
   user: humpel
