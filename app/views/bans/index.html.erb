@@ -2,9 +2,7 @@
   <tr>
     <th>Summoner</th><th>Reason</th><th>Ban duration</th><th>Ban ends</th>
   </tr>
-<% @bans.each do |ban| -%>
-<%= render ban %>
-<% end -%>
+<%= render partial: :ban, collection: @bans %>
 </table>
 <br/>
-<%= link_to 'New Ban', new_ban_path %>
+<%= render template: 'bans/new' %>
