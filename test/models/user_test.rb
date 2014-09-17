@@ -53,4 +53,11 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_match /Name can't be blank/, ex.message
   end
+
+  test 'should fail to create user with duplicate name' do
+    ex = assert_raises ActiveRecord::RecordInvalid do
+      User.create! name: users(:amshaegar).name
+    end
+    assert_match /Name has already been taken/, ex.message
+  end
 end

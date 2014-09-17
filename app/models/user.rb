@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   belongs_to :main, class_name: 'User'
   has_many :bans, -> { order 'created_at + INTERVAL duration DAY' }
 
-  validates :name, presence: true
+  validates :name, presence: true, uniqueness: true
 
   def banned?
     bans.last.ends > Time.now
