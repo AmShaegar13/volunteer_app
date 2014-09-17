@@ -1,9 +1,11 @@
 <%= form_for @ban do |f| %>
+  <%= f.fields_for :user do |fu| %>
+    <%= fu.collection_select(:id, User.all, :id, :name) %><br/>
+    - OR -<br/>
+    <%= fu.text_field :name %><br/>
+  <% end -%>
   <%= f.number_field :duration, in: -1..14 %><br/>
   <%= f.text_field :reason %><br/>
   <%= f.text_field :link %><br/>
-  <%= f.fields_for :user do |fu| %>
-    <%= fu.text_field :name %><br/>
-  <% end -%>
   <%= f.submit 'Create' %><br/>
 <% end -%>
