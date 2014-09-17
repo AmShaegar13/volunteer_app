@@ -1,0 +1,13 @@
+<table border="1">
+  <tr>
+    <td>Name:</td><td><%= @user.name %></td>
+  <tr>
+  </tr>
+    <td>Bans:</td><td><%= @user.bans.count %></td>
+  <tr>
+<% if @user.banned? -%>
+  </tr>
+    <td>Banned until:</td><td><%= @user.bans.last.end %></td>
+  </tr>
+<% end -%>
+</table>
