@@ -4,11 +4,12 @@
   </tr>
 <% @bans.each do |ban| -%>
   <% user = ban.user -%>
-  <tr>
+  <% active = ban.active? ? 'active' : 'inactive' -%>
+  <tr class="<%= active %>">
     <td><%= link_to user.name, user %></td>
     <td><a href="<%= ban.link %>"><%= ban.reason %></a></td>
     <td><%= ban.duration %> days</td>
-    <td><%= ban.end %></td>
+    <td><%= ban.ends %></td>
   </tr>
 <% end -%>
 </table>

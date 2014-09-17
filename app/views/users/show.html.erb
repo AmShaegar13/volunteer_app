@@ -7,7 +7,7 @@
   <tr>
 <% if @user.banned? -%>
   </tr>
-    <td>Banned until:</td><td><%= @user.bans.last.end %></td>
+    <td>Banned until:</td><td><%= @user.bans.last.ends %></td>
   </tr>
 <% end -%>
 </table>

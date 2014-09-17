@@ -6,6 +6,6 @@ class User < ActiveRecord::Base
   validates :name, presence: true
 
   def banned?
-    bans.last.end > Time.now
+    bans.last.ends > Time.now
   end
 end

@@ -8,8 +8,12 @@ class Ban < ActiveRecord::Base
       with: %r#http://forums\.(na|euw|eune)\.leagueoflegends\.com/board/showthread.php\?[tp]=\d+.*#
   }
 
-  def end
+  def ends
     created_at + duration.days
+  end
+
+  def active?
+    ends > Time.now
   end
 
   def self.ordered_by_end
