@@ -1,4 +1,4 @@
-  <% user = ban.user -%>
+  <% user = @user || ban.user -%>
   <% active = ban.active? ? 'active' : 'inactive' -%>
   <tr class="<%= active %>">
     <td><%= link_to user.name, user %></td>
