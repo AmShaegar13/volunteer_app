@@ -60,4 +60,30 @@ class UserTest < ActiveSupport::TestCase
     end
     assert_match /Name has already been taken/, ex.message
   end
+
+  test 'should destroy bans of user' do
+    user = users(:amshaegar)
+    bans = user.bans
+
+    assert_not_equal 0, bans.count
+
+    user.destroy
+
+    assert_equal 0, bans.count
+  end
+
+  test 'should nullify main' do
+    user = users(:amshaegar)
+    smurfs = user.smurfs
+    smurf = smurfs.first
+
+    assert_not_equal 0, smurfs.count
+    assert_not_nil smurf.main
+
+    user.destroy
+    smurf.reload
+
+    assert_equal 0, smurfs.count
+    assert_nil smurf.main
+  end
 end
