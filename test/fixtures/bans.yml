@@ -8,14 +8,14 @@ three_days:
   duration: 3
   user: amshaegar
 
-three_days_ongoing:
+seven_days_ongoing:
   created_at: <%= 1.day.ago.to_formatted_s(:db) %>
   duration: 7
   user: amshaegar
 
-three_days:
-  created_at: <%= 5.day.ago.to_formatted_s(:db) %>
-  duration: 3
+five_days:
+  created_at: <%= 7.day.ago.to_formatted_s(:db) %>
+  duration: 5
   user: humpel
 
 permanent:

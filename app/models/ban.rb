@@ -14,15 +14,15 @@ class Ban < ActiveRecord::Base
     created_at + duration.days
   end
 
-  def active?
-    ends > Time.now
-  end
-
   def permanent?
     duration == -1
   end
 
+  def active?
+    permanent? || ends > Time.now
+  end
+
   def self.ordered_by_end
-    Ban.order('created_at + INTERVAL duration DAY DESC')
+    Ban.where.not(duration: -1).order('created_at + INTERVAL duration DAY DESC')
   end
 end

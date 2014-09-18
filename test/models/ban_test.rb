@@ -106,5 +106,15 @@ class BanTest < ActiveSupport::TestCase
 
   test 'ban should be permanent' do
     assert bans(:permanent).permanent?
+    assert_not bans(:seven_days_ongoing).permanent?
+    assert_not bans(:three_days).permanent?
+    assert_not bans(:five_days).permanent?
+  end
+
+  test 'ban should be active' do
+    assert bans(:permanent).active?
+    assert bans(:seven_days_ongoing).active?
+    assert_not bans(:three_days).active?
+    assert_not bans(:five_days).active?
   end
 end
