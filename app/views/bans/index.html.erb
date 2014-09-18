@@ -1,8 +1,3 @@
-<table border="1">
-  <tr>
-    <th>Summoner</th><th>Reason</th><th>Ban duration</th><th>Ban ends</th>
-  </tr>
-<%= render partial: :ban, collection: @bans %>
-</table>
+<%= render partial: 'list' %>
 <br/>
 <%= render template: 'bans/new' %>
