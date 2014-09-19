@@ -6,10 +6,10 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should create user' do
-    assert_nil User.find_by(name: 'Random User')
+    assert_nil User.find_by name: 'Random User'
 
-    User.create!(name: 'Random User')
-    assert_not_nil User.find_by(name: 'Random User')
+    User.create! id: 42, name: 'Random User'
+    assert_not_nil User.find 42
   end
 
   test 'should have smurf-main association' do
@@ -45,20 +45,6 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal 1, user.smurfs.size
     assert_equal user, smurf.main
-  end
-
-  test 'should fail to create user without name' do
-    ex = assert_raises ActiveRecord::RecordInvalid do
-      User.create!
-    end
-    assert_match /Name can't be blank/, ex.message
-  end
-
-  test 'should fail to create user with duplicate name' do
-    ex = assert_raises ActiveRecord::RecordInvalid do
-      User.create! name: users(:amshaegar).name
-    end
-    assert_match /Name has already been taken/, ex.message
   end
 
   test 'should destroy bans of user' do
