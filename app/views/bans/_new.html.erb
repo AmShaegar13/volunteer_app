@@ -1,5 +1,11 @@
 <tr>
-  <td>Ban</td><td><%= form.select :duration, [['1 day', 1], ['3 days', 3], ['7 days', 7], ['14 days', 14], [:perma, -1]] %></td>
+  <td>Ban</td>
+  <td>
+    <%= form.select :duration, options_for_select(
+        [['1 day', 1], ['3 days', 3], ['7 days', 7], ['14 days', 14], [:perma, -1]],
+        @user ? increase_duration(@user.bans.last.duration) : 0
+    ) %>
+  </td>
 </tr>
 <tr>
   <td>Reason</td>
