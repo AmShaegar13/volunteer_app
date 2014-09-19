@@ -23,7 +23,7 @@ class Summoner < ActiveResource::Base
       names << fix_encoding(name, Encoding::ISO8859_1) rescue nil
       names << fix_encoding(name, Encoding::ISO8859_2) rescue nil
       names << fix_encoding(name, Encoding::WINDOWS_1252) rescue nil
-      names = URI::encode(names * ',')
+      names = URI::encode(names.uniq * ',')
       new(get("by-name/#{names}"))
     rescue ActiveResource::ResourceNotFound
       nil
