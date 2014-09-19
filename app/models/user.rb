@@ -9,4 +9,16 @@ class User < ActiveRecord::Base
   def banned?
     bans.last.active?
   end
+
+  def self.find_or_create(id, name)
+    if name.blank?
+      return User.find id
+    end
+
+    summoner = Summoner.find_by_name(name)
+    return nil if summoner.nil?
+
+    user = User.find summoner.id rescue nil
+    User.new id: summoner.id, name: summoner.name if user.nil?
+  end
 end

@@ -25,6 +25,8 @@ class Summoner < ActiveResource::Base
       names << fix_encoding(name, Encoding::WINDOWS_1252) rescue nil
       names = URI::encode(names * ',')
       new(get("by-name/#{names}"))
+    rescue ActiveResource::ResourceNotFound
+      nil
     end
     alias_method :find_by_names, :find_by_name
 
