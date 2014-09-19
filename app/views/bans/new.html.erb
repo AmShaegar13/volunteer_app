@@ -4,7 +4,7 @@
       <td><%= f.label :user, 'User' %></td>
       <td>
         <%= f.fields_for :user do |fu| %>
-          <% users = User.all.order(:id).map { |user| [user.name, user.id, 'data-last-ban' => user.bans.last.duration] } -%>
+          <% users = User.all.order(:id).map { |user| [user.name, user.id, 'data-latest-ban' => user.bans.last.duration] } -%>
           <%= fu.select(:id, users) %><br/>
           - OR -<br/>
           <%= fu.text_field :name %><br/>
