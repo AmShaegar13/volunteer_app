@@ -1,15 +1,24 @@
 <table border="1">
   <tr>
     <td>Summoner:</td><td><%= @user.name %></td>
-  <tr>
   </tr>
+  <tr>
     <td>Total bans:</td><td><%= @user.bans.count %></td>
-  <tr>
-<% if @user.banned? -%>
   </tr>
+<% if @user.banned? -%>
+  <tr>
     <td>Banned until:</td><td><%= @user.bans.last.ends %></td>
   </tr>
 <% end -%>
 </table>
 <br/>
 <%= render partial: 'bans/list' %>
+<br/>
+<%= form_for @blank_ban do |f| %>
+  <table border="1">
+    <%= f.fields_for @user do |fu| %>
+      <%= fu.hidden_field :id %>
+    <% end -%>
+    <%= render partial: 'bans/new', locals: { form: f } %>
+  </table>
+<% end -%>

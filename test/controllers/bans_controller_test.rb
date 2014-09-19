@@ -21,6 +21,9 @@ class BansControllerTest < ActionController::TestCase
     user = users(:amshaegar)
     bans = user.bans.count
 
+    summoner = Summoner.new(id: user.id, name: user.name)
+    Summoner.expects(:find_by_name).with(name: user.name).returns(summoner)
+
     get :create, {
         ban: {
             duration: 14,

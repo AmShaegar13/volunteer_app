@@ -6,11 +6,11 @@ class BansController < ApplicationController
   end
 
   def new
-    @ban = Ban.new
+    @blank_ban = Ban.new
   end
 
   def create
-    user = User.find_or_create params.require(:ban).require(:user).permit(:id)[:id], params.require(:ban).require(:user).permit(:name)[:name]
+    user = User.find_or_create params.require(:ban).require(:user).permit(:id, :name)
 
     begin
       Ban.create! params.require(:ban).permit(:duration, :user, :reason, :link).merge(user: user)

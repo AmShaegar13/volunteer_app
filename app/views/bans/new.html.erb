@@ -1,4 +1,4 @@
-<%= form_for @ban do |f| %>
+<%= form_for @blank_ban do |f| %>
   <table border="1">
     <tr>
       <td><%= f.label :user, 'User' %></td>
@@ -11,17 +11,6 @@
         <% end -%>
       </td>
     </tr>
-    <tr>
-      <td>Ban</td><td><%= f.select :duration, [['1 day', 1], ['3 days', 3], ['7 days', 7], ['14 days', 14], [:perma, -1]] %></td>
-    </tr>
-    <tr>
-      <td>Reason</td><td><%= f.text_field :reason %></td>
-    </tr>
-    <tr>
-      <td>Forum link</td><td><%= f.text_field :link %></td>
-    </tr>
-    <tr>
-      <td>Submit</td><td><%= f.submit 'Create' %></td>
-    </tr>
+    <%= render partial: 'new', locals: { form: f } %>
   </table>
 <% end -%>

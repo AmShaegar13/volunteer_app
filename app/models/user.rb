@@ -10,12 +10,12 @@ class User < ActiveRecord::Base
     bans.last.active?
   end
 
-  def self.find_or_create(id, name)
-    if name.blank?
-      return User.find id
+  def self.find_or_create(params)
+    unless params.key? :name
+      return User.find params[:id]
     end
 
-    summoner = Summoner.find_by_name(name)
+    summoner = Summoner.find_by_name(params[:name])
     return nil if summoner.nil?
 
     user = User.find summoner.id rescue nil
