@@ -15,10 +15,10 @@
 <%= render partial: 'bans/list' %>
 <br/>
 <%= form_for @blank_ban do |f| %>
-  <table border="1">
-    <%= f.fields_for @user do |fu| %>
-      <%= fu.hidden_field :id %>
-    <% end -%>
-    <%= render partial: 'bans/new', locals: { form: f } %>
-  </table>
+  <%= f.fields_for @user do |fu| %>
+    <%= fu.hidden_field :id %>
+  <% end -%>
+<table border="1">
+  <%= render partial: 'bans/new', locals: { form: f } %>
+</table>
 <% end -%>
