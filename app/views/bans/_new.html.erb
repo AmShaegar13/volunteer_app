@@ -10,3 +10,9 @@
 <tr>
   <td>Submit</td><td><%= form.submit 'Create' %></td>
 </tr>
+<%= content_tag :div, nil, class: "reasons", data: { reasons: Ban.all.select(:reason).group(:reason).order('COUNT(reason) DESC').map(&:reason) } %>
+<%= javascript_tag do -%>
+  $('#ban_reason').autocomplete({
+    source: $('.reasons').data('reasons')
+  })
+<% end -%>
