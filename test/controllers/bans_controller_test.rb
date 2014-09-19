@@ -43,6 +43,10 @@ class BansControllerTest < ActionController::TestCase
     summoner = Summoner.new(id: user.id, name: user.name)
     Summoner.expects(:find_by_name).with(user.name).returns(summoner)
 
+    assert_raise ActiveRecord::RecordNotFound do
+      User.find 1337
+    end
+
     ban_user_by_name(user.name)
 
     assert_not flash.key? 'error'
