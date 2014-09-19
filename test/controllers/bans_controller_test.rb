@@ -5,7 +5,7 @@ class BansControllerTest < ActionController::TestCase
     user = users(:amshaegar)
     bans = user.bans.count
 
-    Summoner.expects(:find_by_name).never
+    User.expects(:find_or_create).with('id' => user.id.to_s).returns(user)
 
     get :create, {
         ban: {
@@ -27,8 +27,7 @@ class BansControllerTest < ActionController::TestCase
     user = users(:amshaegar)
     bans = user.bans.count
 
-    summoner = Summoner.new(id: user.id, name: user.name)
-    Summoner.expects(:find_by_name).with(user.name).returns(summoner)
+    User.expects(:find_or_create).with('name' => user.name).returns(user)
 
     ban_user_by_name(user.name)
 
@@ -40,12 +39,11 @@ class BansControllerTest < ActionController::TestCase
   test 'should create ban with name of new user' do
     user = User.new id: 1337, name: 'DummyUser'
 
-    summoner = Summoner.new(id: user.id, name: user.name)
-    Summoner.expects(:find_by_name).with(user.name).returns(summoner)
-
     assert_raise ActiveRecord::RecordNotFound do
       User.find 1337
     end
+
+    User.expects(:find_or_create).with('name' => user.name).returns(user)
 
     ban_user_by_name(user.name)
 
