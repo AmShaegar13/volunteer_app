@@ -10,12 +10,23 @@ class BansController < ApplicationController
   end
 
   def create
+    errors = []
     user = if params[:ban][:user][:name].empty?
              User.find params[:ban][:user][:id]
            else
-             User.new params.require(:ban).require(:user).permit(:name)
+             begin
+               User.new name: Summoner.find_by_name(params[:ban][:user][:name]).name
+             rescue ActiveResource::ResourceNotFound
+               errors << 'Summoner not found.'
+               nil
+             end
            end
-    Ban.create! params.require(:ban).permit(:duration, :user, :reason, :link).merge(user: user)
+    begin
+      Ban.create! params.require(:ban).permit(:duration, :user, :reason, :link).merge(user: user)
+    rescue => ex
+      errors << ex.message
+    end
+    flash[:error] = errors
     redirect_to :root
   end
 end

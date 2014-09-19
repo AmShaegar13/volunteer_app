@@ -8,6 +8,9 @@
 </head>
 <body>
 
+<% if flash.key? :error.to_s -%>
+  <%= render partial: 'common/error' %>
+<% end -%>
 <%= yield %>
 
 </body>

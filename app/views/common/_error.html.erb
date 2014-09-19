@@ -1,0 +1,3 @@
+<% flash[:error].each do |msg| -%>
+  <%= content_tag :div, msg, class: :error %>
+<% end -%>
