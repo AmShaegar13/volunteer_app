@@ -19,7 +19,6 @@ class User < ActiveRecord::Base
     return nil if summoner.nil?
 
     user = User.find summoner.id rescue nil
-    user = User.new id: summoner.id, name: summoner.name if user.nil?
-    user
+    user || User.new(id: summoner.id, name: summoner.name)
   end
 end
