@@ -1,8 +1,8 @@
-  <% user = @user || ban.user -%>
-  <% active = ban.active? ? 'active' : 'inactive' -%>
-  <tr class="<%= active %>">
-    <td><%= link_to user.name, user %></td>
-    <td><a href="<%= ban.link %>"><%= ban.reason %></a></td>
-    <td><%= format_duration ban.duration %></td>
-    <td><%= ban.ends %></td>
-  </tr>
+<% user = @user || ban.user -%>
+<% active = ban.active? ? 'active' : 'inactive' -%>
+<tr class="<%= active %>">
+  <td><%= link_to user.name, user %></td>
+  <td><a href="<%= ban.link %>"><%= ban.reason %></a></td>
+  <td><%= format_duration ban.duration %></td>
+  <td><%= ban.ends %></td>
+</tr>
