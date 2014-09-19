@@ -4,10 +4,12 @@
       <td><%= f.label :user, 'User' %></td>
       <td>
         <%= f.fields_for :user do |fu| %>
-          <% users = User.all.order(:id).map { |user| [user.name, user.id, 'data-latest-ban' => user.bans.last.duration] } -%>
-          <%= fu.select(:id, users) %><br/>
-          - OR -<br/>
-          <%= fu.text_field :name %><br/>
+          <%= fu.text_field :name %>
+          <%= javascript_tag do %>
+            $('#ban_user_name').autocomplete({
+              source: <%= User.all.select(:name).order(id: :desc).map(&:name).to_json.html_safe %>
+            })
+          <% end %>
         <% end -%>
       </td>
     </tr>
