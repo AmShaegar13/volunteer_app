@@ -4,6 +4,7 @@ class User < ActiveRecord::Base
   # always order bans descending by end of ban; duration = -1 ensures perma bans on top
   has_many :bans, -> { order 'duration = -1, created_at + INTERVAL duration DAY' }, dependent: :destroy
 
+  validates :id, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true
 
   def banned?
