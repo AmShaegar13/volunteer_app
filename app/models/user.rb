@@ -18,8 +18,9 @@ class User < ActiveRecord::Base
 
     user = User.find summoner.id rescue nil
     if user
-      # update user name from API
+      # update user
       user.name = summoner.name
+      user.level = summoner.summonerLevel
     else
       user = User.new(id: summoner.id, name: summoner.name, level: summoner.summonerLevel)
     end
