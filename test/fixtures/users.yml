@@ -1,16 +1,21 @@
 amshaegar:
   name: AmShaegar
+  level: 30
 
 humpel:
   name: Humpelstielzche
+  level: 30
 
 smurf_1:
   name: AmShaegarII
   main: amshaegar
+  level: 5
 
 smurf_2:
   name: AmShaegarIII
   main: amshaegar
+  level: 5
 
 smurf_new:
   name: HumpelII
+  level: 1

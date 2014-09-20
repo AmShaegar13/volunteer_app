@@ -28,7 +28,6 @@ class BansControllerTest < ActionController::TestCase
     assert_not flash.key? 'error'
     assert_redirected_to :root
     assert_equal 1, user.bans.count
-    assert_not_nil User.find 1337
   end
 
   def ban_user_by_name(name)

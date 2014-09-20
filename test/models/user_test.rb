@@ -8,7 +8,7 @@ class UserTest < ActiveSupport::TestCase
   test 'should create user' do
     assert_nil User.find_by name: 'Random User'
 
-    User.create! id: 42, name: 'Random User'
+    User.create! id: 42, name: 'Random User', level: 30
     assert_not_nil User.find 42
   end
 
@@ -76,16 +76,16 @@ class UserTest < ActiveSupport::TestCase
   test 'should find user by name' do
     user = users(:amshaegar)
 
-    summoner = Summoner.new(id: user.id, name: user.name)
+    summoner = Summoner.new(id: user.id, name: user.name, summonerLevel: user.level)
     Summoner.expects(:find_by_name).with(user.name).returns(summoner)
 
     assert_equal user, User.find_or_create(user.name)
   end
 
   test 'should create user by name' do
-    user = User.new id: 1337, name: 'DummyUser'
+    user = User.new id: 1337, name: 'DummyUser', level: 15
 
-    summoner = Summoner.new(id: user.id, name: user.name)
+    summoner = Summoner.new(id: user.id, name: user.name, summonerLevel: user.level)
     Summoner.expects(:find_by_name).with(user.name).returns(summoner)
 
     assert_raise ActiveRecord::RecordNotFound do
@@ -96,11 +96,14 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test 'should update user name' do
-    user = users(:amshaegar)
+    user = users(:smurf_1)
 
-    summoner = Summoner.new(id: user.id, name: user.name.reverse)
+    summoner = Summoner.new(id: user.id, name: 'New Name', summonerLevel: 30)
     Summoner.expects(:find_by_name).with(user.name).returns(summoner)
 
-    assert_equal user.name.reverse, User.find_or_create(user.name).name
+    user = User.find_or_create(user.name)
+
+    assert_equal 'New Name', user.name
+    assert_equal 30, user.level
   end
 end
