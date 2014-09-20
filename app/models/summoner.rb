@@ -10,7 +10,6 @@ class Summoner < ActiveResource::Base
 
   class << self
     def element_path(id, prefix_options = {}, query_options = {})
-      pp id
       super(id, prefix_options, query_options.merge({ api_key: @@api_key }))
     end
 
