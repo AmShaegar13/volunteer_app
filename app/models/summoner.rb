@@ -1,10 +1,9 @@
 require 'active_resource'
 
 class Summoner < ActiveResource::Base
-  @@resources = YAML.load_file('config/resources.yml')
-  @@api_key = @@resources['riot_api']['api_key']
+  @@api_key = Resources.data['riot_api']['api_key']
 
-  self.site = @@resources['riot_api']['base_url']
+  self.site = Resources.data['riot_api']['base_url']
   self.collection_name ='summoner'
   self.include_format_in_path = false
   self.logger = Logger.new(STDERR) if Rails.env == 'development'
