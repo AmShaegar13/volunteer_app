@@ -19,8 +19,10 @@ class User < ActiveRecord::Base
     if user
       # update user name from API
       user.name = summoner.name
-      user.save!
+    else
+      user = User.new(id: summoner.id, name: summoner.name)
     end
-    user || User.new(id: summoner.id, name: summoner.name)
+    user.save!
+    user
   end
 end
