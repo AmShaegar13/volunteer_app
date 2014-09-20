@@ -11,15 +11,19 @@ class User < ActiveRecord::Base
     bans.last.active?
   end
 
-  def self.find_or_create(params)
-    unless params.key? :name
-      return User.find params[:id]
-    end
+  def self.find_or_create(name)
+    user = User.find_by_name name
+    return user unless user.nil?
 
-    summoner = Summoner.find_by_name(params[:name])
+    summoner = Summoner.find_by_name name
     return nil if summoner.nil?
 
     user = User.find summoner.id rescue nil
+    if user
+      # update user name from API
+      user.name = summoner.name
+      user.save!
+    end
     user || User.new(id: summoner.id, name: summoner.name)
   end
 end
