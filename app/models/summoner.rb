@@ -4,7 +4,7 @@ class Summoner < ActiveResource::Base
   @@api_key = Resources.data['riot_api']['api_key']
 
   self.site = Resources.data['riot_api']['base_url']
-  self.collection_name ='summoner'
+  self.collection_name = 'summoner'
   self.include_format_in_path = false
   self.logger = Logger.new(STDERR) if Rails.env == 'development'
 

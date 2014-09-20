@@ -5,6 +5,8 @@ require File.expand_path('../application', __FILE__)
 Rails.application.initialize!
 
 require 'pp'
-require 'resources'
 
+require 'resources'
 Resources.data = YAML.load_file('config/resources.yml')
+
+require 'authentication'
