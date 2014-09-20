@@ -19,11 +19,11 @@ class Summoner < ActiveResource::Base
     end
 
     def find_by_name(name)
-      names = [name]
+      names = [URI::encode(name)]
       names << fix_encoding(name, Encoding::ISO8859_1) rescue nil
       names << fix_encoding(name, Encoding::ISO8859_2) rescue nil
       names << fix_encoding(name, Encoding::WINDOWS_1252) rescue nil
-      names = URI::encode(names.uniq * ',')
+      names = names.uniq * ','
       new(get("by-name/#{names}"))
     rescue ActiveResource::ResourceNotFound
       nil
@@ -31,7 +31,7 @@ class Summoner < ActiveResource::Base
     alias_method :find_by_names, :find_by_name
 
     def fix_encoding(str, enc)
-      str.encode(enc).force_encoding(Encoding::UTF_8)
+      URI::encode(str.encode(enc).force_encoding(Encoding::UTF_8))
     end
     private :fix_encoding
   end
