@@ -30,7 +30,7 @@ class Summoner < ActiveResource::Base
     end
 
     def fix_encoding(str, enc)
-      URI::encode(str.encode(enc).force_encoding(Encoding::UTF_8))
+      str.encode(enc).force_encoding(Encoding::UTF_8)
     end
     private :fix_encoding
   end
