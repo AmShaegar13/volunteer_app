@@ -12,9 +12,6 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create(name)
-    user = User.find_by_name name
-    return user unless user.nil?
-
     summoner = Summoner.find_by_name name
     return nil if summoner.nil?
 
