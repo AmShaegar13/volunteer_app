@@ -3,6 +3,9 @@
     <td>Summoner:</td><td><%= @user.name %></td>
   </tr>
   <tr>
+    <td>Level:</td><td><%= @user.level %></td>
+  </tr>
+  <tr>
     <td>Total bans:</td><td><%= @user.bans.count %></td>
   </tr>
 <% if @user.banned? -%>
