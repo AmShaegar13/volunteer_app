@@ -2,7 +2,7 @@
 <% active = ban.active? ? 'active' : 'inactive' -%>
 <tr class="<%= active %>">
   <td><%= link_to user.name, user %></td>
-  <td><a href="<%= ban.link %>"><%= ban.reason %></a></td>
+  <td><%= link_to ban.reason, ban.link, :target => '_blank' %></td>
   <td><%= format_duration ban.duration %></td>
   <td><%= ban.ends %></td>
 </tr>
