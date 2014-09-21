@@ -1,5 +1,5 @@
 class Authentication
-  attr_accessor :success, :code, :error
+  attr_accessor :success, :code, :error, :user
 
   def initialize(params)
     uri = URI.parse(Resources.data['auth_service']['url'])
@@ -8,6 +8,7 @@ class Authentication
     self.success = result['success']
     self.code = result['code']
     self.error = result['error']
+    self.user = HashWithIndifferentAccess.new(result['user'])
   end
 
   alias_method :success?, :success
