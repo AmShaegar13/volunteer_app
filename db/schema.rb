@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140920210341) do
+ActiveRecord::Schema.define(version: 20140921193551) do
 
   create_table "bans", force: true do |t|
     t.integer  "user_id"
