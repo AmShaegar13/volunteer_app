@@ -1,0 +1,9 @@
+class CreateToolUsers < ActiveRecord::Migration
+  def change
+    create_table :tool_users do |t|
+      t.string :name
+
+      t.timestamps
+    end
+  end
+end

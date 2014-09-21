@@ -11,7 +11,7 @@ class SessionsController < ApplicationController
     credentials = params.require(:auth).permit(:login, :password)
     auth = Authentication.new credentials
     if auth.success? && auth.user[:volunteer]
-      session[:tool_user_id] = auth.user[:id]
+      authenticate auth.user
     else
       reset_session
       if auth.success?
@@ -23,4 +23,13 @@ class SessionsController < ApplicationController
     end
     redirect_to :root
   end
+
+  def authenticate(user)
+    session[:tool_user_id] = user[:id]
+
+    tool_user = ToolUser.find_by_id(user[:id]) || ToolUser.new(id: user[:id])
+    tool_user.name = user[:name]
+    tool_user.save!
+  end
+  private :authenticate
 end

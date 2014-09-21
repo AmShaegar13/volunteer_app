@@ -1,11 +1,7 @@
 require 'test_helper'
 
 class SessionsControllerTest < ActionController::TestCase
-  def params
-    { 'login' => 'username', 'password' => 'secret' }
-  end
-
-  test 'should authenticate volunteer' do
+  test 'should authenticate volunteer and create tool user' do
     tool_user = { id: 13, name: 'username', volunteer: true }
     auth = stub( 'success?' => true, user: tool_user )
 
@@ -15,6 +11,20 @@ class SessionsControllerTest < ActionController::TestCase
 
     assert_redirected_to :root
     assert_equal tool_user[:id], session[:tool_user_id]
+    assert_not_nil ToolUser.find(tool_user[:id])
+  end
+
+  test 'should authenticate volunteer and update tool user' do
+    tool_user = { id: tool_users(:admin).id, name: 'username', volunteer: true }
+    auth = stub( 'success?' => true, user: tool_user )
+
+    Authentication.expects(:new).with(params).returns(auth)
+
+    get :verify, auth: params
+
+    assert_redirected_to :root
+    assert_equal tool_user[:id], session[:tool_user_id]
+    assert_equal tool_user[:name], ToolUser.find(tool_user[:id]).name
   end
 
   test 'should deny access to non volunteer' do
@@ -48,6 +58,11 @@ class SessionsControllerTest < ActionController::TestCase
 
     get :logout
 
-    assert_not session.key? :tool_user_id
+    assert_not session.key?(:tool_user_id)
   end
+
+  def params
+    { 'login' => 'username', 'password' => 'secret' }
+  end
+  private :params
 end

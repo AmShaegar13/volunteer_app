@@ -1,6 +1,10 @@
 require 'test_helper'
 
 class BansControllerTest < ActionController::TestCase
+  def setup
+    session[:tool_user_id] = tool_users(:admin).id
+  end
+
   test 'should create ban with name' do
     user = users(:amshaegar)
     bans = user.bans.count
