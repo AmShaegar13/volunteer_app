@@ -18,18 +18,21 @@ class Summoner < ActiveResource::Base
     end
 
     def find_by_name(name)
-      names = [URI::encode(name)]
+      names = [name]
       names << fix_encoding(name, Encoding::ISO8859_1) rescue nil
       names << fix_encoding(name, Encoding::ISO8859_2) rescue nil
       names << fix_encoding(name, Encoding::WINDOWS_1252) rescue nil
       names = names.uniq * ','
+      pp names
       find "by-name/#{names}"
     rescue ActiveResource::ResourceNotFound
       nil
     end
 
     def fix_encoding(str, enc)
-      str.encode(enc).force_encoding(Encoding::UTF_8)
+      str = str.encode(enc).force_encoding(Encoding::UTF_8)
+      raise ArgumentError, 'Invalid encoding' unless str.valid_encoding?
+      str
     end
     private :fix_encoding
   end
