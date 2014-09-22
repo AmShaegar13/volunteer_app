@@ -1,0 +1,3 @@
+create_ban:
+  tool_user: admin
+  action: 'create'

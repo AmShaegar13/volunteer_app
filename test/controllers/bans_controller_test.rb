@@ -8,6 +8,7 @@ class BansControllerTest < ActionController::TestCase
   test 'should create ban with id' do
     user = users(:amshaegar)
     bans = user.bans.count
+    actions = current_user.actions.count
 
     User.expects(:find_or_create).with('id' => user.id.to_s).returns(user)
 
@@ -25,11 +26,13 @@ class BansControllerTest < ActionController::TestCase
     assert_not flash.key? 'error'
     assert_redirected_to :root
     assert_equal bans+1, user.bans.count
+    assert_equal actions+1, current_user.actions.count
   end
 
   test 'should create ban with name' do
     user = users(:amshaegar)
     bans = user.bans.count
+    actions = current_user.actions.count
 
     User.expects(:find_or_create).with('name' => user.name).returns(user)
 
@@ -38,10 +41,12 @@ class BansControllerTest < ActionController::TestCase
     assert_not flash.key? 'error'
     assert_redirected_to :root
     assert_equal bans+1, user.bans.count
+    assert_equal actions+1, current_user.actions.count
   end
 
   test 'should create ban with name of new user' do
     user = User.new id: 1337, name: 'DummyUser'
+    actions = current_user.actions.count
 
     assert_raise ActiveRecord::RecordNotFound do
       User.find 1337
@@ -54,6 +59,7 @@ class BansControllerTest < ActionController::TestCase
     assert_not flash.key? 'error'
     assert_redirected_to :root
     assert_equal 1, user.bans.count
+    assert_equal actions+1, current_user.actions.count
   end
 
   def ban_user_by_name(name)
@@ -69,4 +75,11 @@ class BansControllerTest < ActionController::TestCase
     }
   end
   private :ban_user_by_name
+
+  # TODO find a better way than code duplication
+  def current_user
+    return nil unless session.key? :tool_user_id
+    @current_user ||= ToolUser.find_by(id: session[:tool_user_id])
+  end
+  private :current_user
 end

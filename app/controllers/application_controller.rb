@@ -11,4 +11,10 @@ class ApplicationController < ActionController::Base
       redirect_to :auth
     end
   end
+
+  def current_user
+    return nil unless session.key? :tool_user_id
+    @current_user ||= ToolUser.find_by(id: session[:tool_user_id])
+  end
+  private :current_user
 end

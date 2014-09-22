@@ -1,5 +1,6 @@
 class Ban < ActiveRecord::Base
   belongs_to :user
+  has_many :actions, as: :reference
 
   validates :duration, presence: true, inclusion: {
       in: [1, 3, 7, 14, -1]

@@ -18,6 +18,7 @@ Rails.application.routes.draw do
   #   resources :products
   resources :bans
   resources :users
+  resources :actions
 
   # Example resource route with options:
   #   resources :products do

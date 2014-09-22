@@ -11,7 +11,16 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20140921193551) do
+ActiveRecord::Schema.define(version: 20140922092840) do
+
+  create_table "actions", force: true do |t|
+    t.integer  "tool_user_id"
+    t.string   "action"
+    t.integer  "reference_id"
+    t.string   "reference_type"
+    t.datetime "created_at"
+    t.datetime "updated_at"
+  end
 
   create_table "bans", force: true do |t|
     t.integer  "user_id"
