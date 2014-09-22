@@ -7,7 +7,8 @@ class ApplicationController < ActionController::Base
 
   def check_session
     session[:tool_user_id]
-    unless session.key? :tool_user_id
+    unless session.key?(:tool_user_id) && ToolUser.find_by(id: session[:tool_user_id])
+      reset_session
       redirect_to :auth
     end
   end
