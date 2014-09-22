@@ -1,5 +1,5 @@
 module BansHelper
-  BAN_DURATIONS = [1, 3, 7, 14, -1]
+  BAN_DURATIONS = [1, 3, 7, 14, 0]
   BAN_COLORS = %w[#b6d7a8 #ffe599 #f9cb9c #ea9999 #cc4125]
 
   def increase_duration(duration)

@@ -20,5 +20,5 @@ five_days:
 
 permanent:
   created_at: <%= 2.day.ago.to_formatted_s(:db) %>
-  duration: -1
+  duration: 0
   user: humpel

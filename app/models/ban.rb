@@ -3,7 +3,7 @@ class Ban < ActiveRecord::Base
   has_many :actions, as: :reference
 
   validates :duration, presence: true, inclusion: {
-      in: [1, 3, 7, 14, -1]
+      in: [1, 3, 7, 14, 0]
   }
   validates :user, presence: true
   validates :reason, presence: true
@@ -16,7 +16,7 @@ class Ban < ActiveRecord::Base
   end
 
   def permanent?
-    duration == -1
+    duration == 0
   end
 
   def active?
@@ -24,6 +24,6 @@ class Ban < ActiveRecord::Base
   end
 
   def self.ordered_by_end
-    Ban.where.not(duration: -1).order('created_at + INTERVAL duration DAY DESC')
+    Ban.all.order('created_at + INTERVAL duration DAY DESC')
   end
 end
