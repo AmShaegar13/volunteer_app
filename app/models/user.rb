@@ -3,7 +3,7 @@ class User < ActiveRecord::Base
   belongs_to :main, class_name: 'User'
   # always order bans descending by end of ban; duration = 0 ensures perma bans on top
   has_many :bans, -> { order 'duration = 0, created_at + INTERVAL duration DAY' }, dependent: :destroy
-  has_many :actions, as: :reference
+  has_many :actions, as: :reference, dependent: :destroy
 
   validates :id, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true
