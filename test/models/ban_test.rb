@@ -43,7 +43,7 @@ class BanTest < ActiveSupport::TestCase
 
     dates.inject do |memo, element|
       # check order
-      assert memo > element
+      assert memo >= element
       element
     end
   end
