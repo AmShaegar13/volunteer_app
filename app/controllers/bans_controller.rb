@@ -1,7 +1,7 @@
 class BansController < ApplicationController
   def index
     limit = params[:limit] ? params[:limit] : 25
-    @bans = Ban.ordered_by_end.limit(limit)
+    @bans = Ban.order(created_at: :desc).limit(limit)
     self.new
   end
 
