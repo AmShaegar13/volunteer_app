@@ -3,4 +3,8 @@ class ToolUser < ActiveRecord::Base
 
   validates :id, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true
+
+  def self.default_user
+    find_by(id: -1)
+  end
 end
