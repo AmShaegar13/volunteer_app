@@ -13,6 +13,7 @@ Rails.application.routes.draw do
   get 'auth' => 'sessions#auth', as: :auth
   get 'logout' => 'sessions#logout', as: :logout
   post 'verify' => 'sessions#verify', as: :verify
+  get 'search' => 'users#search', as: :search
 
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products

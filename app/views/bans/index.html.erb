@@ -1,3 +1,14 @@
+<%= form_tag :search, method: :get do %>
+  <%= label_tag :search_query, 'Search' %>
+  <%= search_field_tag :search_query %>
+  <%= submit_tag 'Go' %>
+<% end %>
+<%= javascript_tag do %>
+  $('#search_query').autocomplete({
+  source: <%= @autocomplete_users.to_json.html_safe %>
+  })
+<% end %>
+<br/>
 <%= render template: 'bans/new' %>
 <br/>
 <%= render partial: 'list' %>

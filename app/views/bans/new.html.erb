@@ -7,7 +7,7 @@
           <%= fu.text_field :name %>
           <%= javascript_tag do %>
             $('#ban_user_name').autocomplete({
-              source: <%= User.all.select(:name).order(id: :desc).map(&:name).to_json.html_safe %>
+              source: <%= @autocomplete_users.to_json.html_safe %>
             })
           <% end %>
         <% end -%>
