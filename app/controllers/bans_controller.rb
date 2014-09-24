@@ -2,7 +2,7 @@ class BansController < ApplicationController
   def index
     limit = params[:limit] ? params[:limit] : 25
     @bans = Ban.order(created_at: :desc).limit(limit)
-    @autocomplete_users = User.all.select(:name).order(id: :desc).map(&:name)
+    @autocomplete_users = User.select(:name).order(updated_at: :desc).map(&:name)
     self.new
   end
 
