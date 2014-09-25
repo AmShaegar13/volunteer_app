@@ -14,3 +14,11 @@
  *= require_self
  *= require jquery-ui/autocomplete
  */
+
+.ui-autocomplete {
+    max-height: 250px;
+    overflow-x: hidden;
+}
+.ui-menu-item {
+    font-size: 13px;
+}
