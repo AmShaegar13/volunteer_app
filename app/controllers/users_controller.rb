@@ -10,10 +10,10 @@ class UsersController < ApplicationController
   end
 
   def search
-    name = params.require(:search_query)
-    @user = User.find_by_name(name)
-    if @user
-      redirect_to user_path(@user)
+    name = params.require(:search_query) rescue nil
+    user = User.find_by_name(name)
+    if user
+      redirect_to user_path(user)
     else
       flash[:error] = "Summoner '#{name}' not found."
       redirect_to :root
