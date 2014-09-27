@@ -15,4 +15,12 @@ class UsersControllerTest < ActionController::TestCase
       assert_not_nil User.find_by_name name
     end
   end
+
+  test 'should return empty json' do
+    @request.accept = 'application/json'
+    get :search, search_query: 'NoNeXiStEnT'
+    assert_response :success
+    json = JSON @response.body
+    assert_equal 0, json.size
+  end
 end
