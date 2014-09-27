@@ -1,19 +1,31 @@
 <%= form_for @blank_ban do |f| %>
   <table border="1">
+    <%= f.fields_for :user do |fu| %>
     <tr>
-      <td><%= f.label :user, 'User' %></td>
+      <td><%= fu.label :name, 'User' %></td>
       <td>
-        <%= f.fields_for :user do |fu| %>
-          <%= fu.text_field :name %>
-          <%= javascript_tag do %>
-            $('#ban_user_name').autocomplete({
-              source: getUsers,
-              minLength: 0
-            });
-          <% end %>
-        <% end -%>
+        <%= fu.text_field :name %>
+        <%= javascript_tag do %>
+          $('#ban_user_name').autocomplete({
+            source: getUsers,
+            minLength: 0
+          });
+        <% end %>
       </td>
     </tr>
+    <tr>
+      <td><i><%= fu.label :main, 'Main' %></i></td>
+      <td>
+        <%= fu.text_field :main %>
+        <%= javascript_tag do %>
+          $('#ban_user_main').autocomplete({
+            source: getUsers,
+            minLength: 0
+          });
+        <% end %>
+      </td>
+    </tr>
+    <% end -%>
     <%= render partial: 'new', locals: { form: f } %>
   </table>
 <% end -%>

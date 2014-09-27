@@ -5,14 +5,24 @@
   <tr>
     <td>Level:</td><td><%= @user.level %></td>
   </tr>
+  <% if @user.main -%>
+    <tr>
+      <td>Main:</td><td><%= link_to @user.main.name, @user.main %></td>
+    </tr>
+  <% end -%>
+  <% unless @user.smurfs.empty? -%>
+    <tr>
+      <td>Smurfs:</td><td><%= @user.smurfs.map { |smurf| link_to smurf.name, smurf }.join(',').html_safe %></td>
+    </tr>
+  <% end -%>
   <tr>
     <td>Total bans:</td><td><%= @user.bans.count %></td>
   </tr>
-<% if @user.banned? -%>
-  <tr>
-    <td>Banned until:</td><td><%= @user.bans.last.ends %></td>
-  </tr>
-<% end -%>
+  <% if @user.banned? -%>
+    <tr>
+      <td>Banned until:</td><td><%= @user.bans.last.ends %></td>
+    </tr>
+  <% end -%>
 </table>
 <br/>
 <%= render partial: 'bans/list' %>
