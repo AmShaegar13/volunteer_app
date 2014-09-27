@@ -11,6 +11,9 @@
 <% if flash.key? :error.to_s -%>
   <%= render partial: 'common/error' %>
 <% end -%>
+<% if flash.key? :notice.to_s -%>
+  <%= render partial: 'common/notice' %>
+<% end -%>
 <%= yield %>
 
 </body>
