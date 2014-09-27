@@ -11,12 +11,27 @@ class UsersController < ApplicationController
 
   def search
     name = params.require(:search_query) rescue nil
-    user = User.find_by_name(name)
-    if user
-      redirect_to user_path(user)
-    else
-      flash[:error] = "Summoner '#{name}' not found."
-      redirect_to :root
+    respond_to do |format|
+      format.json do
+        users = User.search(name)
+        users = users.select(:name).map(&:name) unless users.empty?
+        respond_with users
+      end
+
+      format.html do
+        user = User.find_by(name: name)
+        if user.nil?
+          summoner = Summoner.find_by_name(name)
+          user = User.find_by(id: summoner.id) unless summoner.nil?
+        end
+
+        if user
+          redirect_to user_path(user)
+        else
+          flash[:error] = "Summoner '#{name}' not found."
+          redirect_to :root
+        end
+      end
     end
   end
 end

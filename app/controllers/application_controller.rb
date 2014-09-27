@@ -5,6 +5,8 @@ class ApplicationController < ActionController::Base
 
   before_action :check_session, except: [:auth, :verify]
 
+  respond_to :json, :html
+
   def check_session
     session[:tool_user_id]
     unless session.key?(:tool_user_id) && ToolUser.find_by(id: session[:tool_user_id])

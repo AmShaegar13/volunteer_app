@@ -5,10 +5,8 @@
 <% end %>
 <%= javascript_tag do %>
   $('#search_query').autocomplete({
-  source: <%= @autocomplete_users.to_json.html_safe %>,
+    source: getUsers,
     minLength: 0
-  }).bind('focus', function() {
-    $(this).autocomplete('search');
   });
 <% end %>
 <br/>

@@ -111,4 +111,18 @@ class UserTest < ActiveSupport::TestCase
     assert_equal 'New Name', user.name
     assert_equal 30, user.level
   end
+
+  test 'should return user name for search term' do
+    users = User.search('shae')
+    users.each do |user|
+      assert_match /shae/, user.name.downcase
+    end
+  end
+
+  test 'should not raise exception' do
+    assert_nothing_raised do
+      users = User.search('NoNeXiStEnT')
+      assert_equal 0, users.size
+    end
+  end
 end

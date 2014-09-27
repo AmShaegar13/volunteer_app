@@ -34,4 +34,9 @@ class User < ActiveRecord::Base
     user.save!
     user
   end
+
+  def self.search(name)
+    return [] if name.blank?
+    User.where('name LIKE ?', "%#{name}%")
+  end
 end
