@@ -14,24 +14,17 @@ class User < ActiveRecord::Base
   end
 
   def self.find_or_create_by(params = {})
-    if params.key? :id
-      return User.find params[:id]
-    end
-
+    return User.find params[:id] if params.key? :id
     raise ArgumentError, 'No valid parameter found. Valid parameters are [:id, :name]' unless params.key? :name
 
     summoner = Summoner.find_by_name params[:name] rescue nil
     return nil if summoner.nil?
 
-    user = User.find summoner.id rescue nil
-    if user
-      # update user
-      user.name = summoner.name
-      user.level = summoner.summonerLevel
-    else
-      user = User.new(id: summoner.id, name: summoner.name, level: summoner.summonerLevel)
-    end
+    user = super id: summoner.id
+    user.name = summoner.name
+    user.level = summoner.summonerLevel
     user.save!
+
     user
   end
 
