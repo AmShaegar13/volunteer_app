@@ -10,7 +10,7 @@ class TrollListOldImporter
           reason: row['reason'],
           duration: row['duration']
       }
-      user = User.find_or_create(name: name)
+      user = User.find_or_create_by(name: name)
 
       if ban[:reason] && ban[:duration] && user
         Ban.create!(duration: ban[:duration], user: user, reason: ban[:reason], link: DEFAULT_LINK, created_at: Time.parse('2014-08-01')) do |ref|

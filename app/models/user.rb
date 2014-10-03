@@ -13,14 +13,14 @@ class User < ActiveRecord::Base
     bans.last.active?
   end
 
-  def self.find_or_create(params = {})
+  def self.find_or_create_by(params = {})
     if params.key? :id
       return User.find params[:id]
     end
 
     raise ArgumentError, 'No valid parameter found. Valid parameters are [:id, :name]' unless params.key? :name
 
-    summoner = Summoner.find_by_name params[:name]
+    summoner = Summoner.find_by_name params[:name] rescue nil
     return nil if summoner.nil?
 
     user = User.find summoner.id rescue nil

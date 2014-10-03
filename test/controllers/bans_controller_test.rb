@@ -10,7 +10,7 @@ class BansControllerTest < ActionController::TestCase
     bans = user.bans.count
     actions = current_user.actions.count
 
-    User.expects(:find_or_create).with('id' => user.id.to_s).returns(user)
+    User.expects(:find_or_create_by).with('id' => user.id.to_s).returns(user)
 
     get :create, {
         ban: {
@@ -34,7 +34,7 @@ class BansControllerTest < ActionController::TestCase
     bans = user.bans.count
     actions = current_user.actions.count
 
-    User.expects(:find_or_create).with('name' => user.name).returns(user)
+    User.expects(:find_or_create_by).with('name' => user.name).returns(user)
 
     ban_user_by_name(user.name)
 
@@ -52,7 +52,7 @@ class BansControllerTest < ActionController::TestCase
       User.find 1337
     end
 
-    User.expects(:find_or_create).with('name' => user.name).returns(user)
+    User.expects(:find_or_create_by).with('name' => user.name).returns(user)
 
     ban_user_by_name(user.name)
 

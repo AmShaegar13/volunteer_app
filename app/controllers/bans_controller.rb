@@ -12,10 +12,10 @@ class BansController < ApplicationController
 
   def create
     user_params = params.require(:ban).require(:user).permit(:id, :name, :main)
-    user = User.find_or_create(user_params.slice(:id, :name))
+    user = User.find_or_create_by(user_params.slice(:id, :name))
     raise ArgumentError, "User '#{user_params[:name]}' does not exist." if user.nil?
     if user_params.key?(:main) && !user_params[:main].blank?
-      main = User.find_or_create(name: user_params[:main])
+      main = User.find_or_create_by(name: user_params[:main])
       unless main.nil?
         user.main = main
         user.save!
