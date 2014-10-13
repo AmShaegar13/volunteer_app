@@ -61,4 +61,9 @@ class BanTest < ActiveSupport::TestCase
     assert_not bans(:three_days).active?
     assert_not bans(:five_days).active?
   end
+
+  test 'ban should have creator' do
+    creator = bans(:one_day).creator
+    assert_equal tool_users(:admin), creator
+  end
 end

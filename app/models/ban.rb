@@ -23,6 +23,10 @@ class Ban < ActiveRecord::Base
     permanent? || ends > Time.now
   end
 
+  def creator
+    actions.where(action: 'create').first.tool_user
+  end
+
   def self.ordered_by_end
     Ban.all.order('created_at + INTERVAL duration DAY DESC')
   end

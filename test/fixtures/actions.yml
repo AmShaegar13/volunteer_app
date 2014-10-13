@@ -1,3 +1,5 @@
 create_ban:
   tool_user: admin
   action: 'create'
+  reference: one_day
+  reference_type: 'Ban'
