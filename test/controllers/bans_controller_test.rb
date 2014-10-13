@@ -5,12 +5,14 @@ class BansControllerTest < ActionController::TestCase
     session[:tool_user_id] = tool_users(:admin).id
   end
 
-  test 'should create ban with id' do
-    user = users(:amshaegar)
+  test 'should create ban with id and set main' do
+    user = users(:smurf_new)
+    main = users(:humpel)
     bans = user.bans.count
     actions = current_user.actions.count
 
     User.expects(:find_or_create_by).with('id' => user.id.to_s).returns(user)
+    User.expects(:find_or_create_by).with(name: main.name).returns(main)
 
     get :create, {
         ban: {
@@ -18,7 +20,8 @@ class BansControllerTest < ActionController::TestCase
             reason: 'test',
             link: VALID_BAN_LINK,
             user: {
-                id: user.id
+                id: user.id,
+                main: main.name
             }
         }
     }
@@ -26,7 +29,8 @@ class BansControllerTest < ActionController::TestCase
     assert_not flash.key? 'error'
     assert_redirected_to :root
     assert_equal bans+1, user.bans.count
-    assert_equal actions+1, current_user.actions.count
+    assert_equal actions+2, current_user.actions.count
+    assert_equal main, user.main
   end
 
   test 'should create ban with name' do

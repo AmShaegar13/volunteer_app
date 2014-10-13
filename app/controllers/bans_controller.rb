@@ -19,6 +19,7 @@ class BansController < ApplicationController
       unless main.nil?
         user.main = main
         user.save!
+        Action.create!(tool_user: current_user, action: 'set_main', reference: user)
       else
         flash[:notice] = "User '#{user_params[:main]}' does not exist."
       end
