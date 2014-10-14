@@ -10,7 +10,7 @@ class User < ActiveRecord::Base
   validates :level, presence: true, inclusion: { in: 1..30 }
 
   def banned?
-    bans.last.active?
+    !bans.empty? && bans.last.active?
   end
 
   def self.find_or_create_by(params = {})
