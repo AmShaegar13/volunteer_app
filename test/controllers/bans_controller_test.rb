@@ -26,7 +26,7 @@ class BansControllerTest < ActionController::TestCase
         }
     }
 
-    assert_not flash.key? 'error'
+    assert_not flash.key?(:error.to_s), flash[:error]
     assert_redirected_to :root
     assert_equal bans+1, user.bans.count
     assert_equal actions+2, current_user.actions.count
@@ -42,7 +42,7 @@ class BansControllerTest < ActionController::TestCase
 
     ban_user_by_name(user.name)
 
-    assert_not flash.key? 'error'
+    assert_not flash.key?(:error.to_s), flash[:error]
     assert_redirected_to :root
     assert_equal bans+1, user.bans.count
     assert_equal actions+1, current_user.actions.count
@@ -60,7 +60,7 @@ class BansControllerTest < ActionController::TestCase
 
     ban_user_by_name(user.name)
 
-    assert_not flash.key? 'error'
+    assert_not flash.key?(:error.to_s), flash[:error]
     assert_redirected_to :root
     assert_equal 1, user.bans.count
     assert_equal actions+1, current_user.actions.count
