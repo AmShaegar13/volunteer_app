@@ -22,9 +22,8 @@ class BansController < ApplicationController
         flash[:notice] = "User '#{user_params[:main]}' does not exist."
       end
     end
-    Ban.create!(params.require(:ban).permit(:duration, :reason, :link).merge(user: user)) do |ban|
-      Action.create!(tool_user: current_user, action: 'create', reference: ban)
-    end
+    ban = Ban.create!(params.require(:ban).permit(:duration, :reason, :link).merge(user: user))
+    Action.create!(tool_user: current_user, action: 'create', reference: ban)
   rescue => ex
     flash[:error] = ex.message
   ensure
