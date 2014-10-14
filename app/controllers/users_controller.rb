@@ -9,6 +9,11 @@ class UsersController < ApplicationController
     @blank_ban = Ban.new
   end
 
+  def create
+    user = User.find_or_create_by params.require(:user).permit(:name)
+    redirect_to user
+  end
+
   def search
     name = params.require(:search_query) rescue nil
     respond_to do |format|
@@ -22,15 +27,18 @@ class UsersController < ApplicationController
         user = User.find_by(name: name)
         if user.nil?
           summoner = Summoner.find_by_name(name)
-          user = User.find_by(id: summoner.id) unless summoner.nil?
+          if summoner
+            user = User.find_by(id: summoner.id)
+            if user.nil?
+              flash[:error] = "Summoner '#{name}' not banned yet."
+              flash[:create_user] = name
+            end
+          else
+            flash[:error] = "Summoner '#{name}' does not exist."
+          end
         end
 
-        if user
-          redirect_to user_path(user)
-        else
-          flash[:error] = "Summoner '#{name}' not found."
-          redirect_to :root
-        end
+        redirect_to(user.nil? ? :root : user_path(user))
       end
     end
   end
