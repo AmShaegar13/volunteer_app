@@ -17,9 +17,7 @@ class BansController < ApplicationController
     if user_params.key?(:main) && !user_params[:main].blank?
       main = User.find_or_create_by(name: user_params[:main])
       unless main.nil?
-        user.main = main
-        user.save!
-        Action.create!(tool_user: current_user, action: 'set_main', reference: user)
+        user.update_main main
       else
         flash[:notice] = "User '#{user_params[:main]}' does not exist."
       end
