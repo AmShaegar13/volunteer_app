@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
 
   def current_user
     return nil unless session.key? :tool_user_id
-    ToolUser.current ||= ToolUser.find_by(id: session[:tool_user_id])
+    @current ||= ToolUser.find_by(id: session[:tool_user_id])
   end
   private :current_user
 end

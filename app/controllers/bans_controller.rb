@@ -12,12 +12,12 @@ class BansController < ApplicationController
 
   def create
     user_params = params.require(:ban).require(:user).permit(:id, :name, :main)
-    user = User.find_or_create_by(user_params.slice(:id, :name))
+    user = User.find_or_create_by(user_params.slice(:id, :name).merge(tool_user: current_user))
     raise ArgumentError, "User '#{user_params[:name]}' does not exist." if user.nil?
     if user_params.key?(:main) && !user_params[:main].blank?
-      main = User.find_or_create_by(name: user_params[:main])
+      main = User.find_or_create_by(name: user_params[:main], banned_by: current_user)
       unless main.nil?
-        user.update_main main
+        user.update_main main, current_user
       else
         flash[:notice] = "User '#{user_params[:main]}' does not exist."
       end

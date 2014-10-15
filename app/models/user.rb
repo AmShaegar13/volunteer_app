@@ -13,10 +13,10 @@ class User < ActiveRecord::Base
     !bans.empty? && bans.last.active?
   end
 
-  def update_main(main)
+  def update_main(main, tool_user)
     self.main = main
     save!
-    Action.create!(tool_user: ToolUser.current, action: 'set_main', reference: self)
+    Action.create!(tool_user: tool_user, action: 'set_main', reference: self)
   end
 
   def self.find_or_create_by(params = {})
@@ -33,7 +33,7 @@ class User < ActiveRecord::Base
     log_action = true if user.new_record?
 
     user.save!
-    Action.create!(tool_user: ToolUser.current, action: 'create', reference: user) if log_action
+    Action.create!(tool_user: params[:banned_by], action: 'create', reference: user) if log_action
 
     user
   end
