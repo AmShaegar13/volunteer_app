@@ -13,12 +13,6 @@ class User < ActiveRecord::Base
     !bans.empty? && bans.last.active?
   end
 
-  def update_main(main, tool_user)
-    self.main = main
-    save!
-    Action.create!(tool_user: tool_user, action: 'set_main', reference: self)
-  end
-
   def self.find_or_create_by(params = {})
     return User.find params[:id] if params.key? :id
     raise ArgumentError, 'No valid parameter found. Valid parameters are [:id, :name]' unless params.key? :name
@@ -29,11 +23,6 @@ class User < ActiveRecord::Base
     user = super id: summoner.id
     user.name = summoner.name
     user.level = summoner.summonerLevel
-
-    log_action = true if user.new_record?
-
-    user.save!
-    Action.create!(tool_user: params[:banned_by], action: 'create', reference: user) if log_action
 
     user
   end

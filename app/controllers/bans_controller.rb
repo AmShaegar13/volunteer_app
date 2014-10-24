@@ -12,19 +12,26 @@ class BansController < ApplicationController
 
   def create
     user_params = params.require(:ban).require(:user).permit(:id, :name, :main)
-    user = User.find_or_create_by(user_params.slice(:id, :name).merge(tool_user: current_user))
+    user = find_or_create_user user_params
     raise ArgumentError, "User '#{user_params[:name]}' does not exist." if user.nil?
     if user_params.key?(:main) && !user_params[:main].blank?
-      main = User.find_or_create_by(name: user_params[:main], banned_by: current_user)
+      main = find_or_create_user(name: user_params[:main])
       unless main.nil?
-        user.update_main main, current_user
+        User.transaction do
+          user.main = main
+          user.save!
+          Action.create!(tool_user: current_user, action: 'set_main', reference: user)
+        end
       else
         flash[:notice] = "User '#{user_params[:main]}' does not exist."
       end
     end
-    ban = Ban.create!(params.require(:ban).permit(:duration, :reason, :link).merge(user: user))
-    Action.create!(tool_user: current_user, action: 'create', reference: ban)
+    Ban.transaction do
+      ban = Ban.create!(params.require(:ban).permit(:duration, :reason, :link).merge(user: user))
+      Action.create!(tool_user: current_user, action: 'create', reference: ban)
+    end
   rescue => ex
+    pp ex.backtrace
     flash[:error] = ex.message
   ensure
     redirect_to :root

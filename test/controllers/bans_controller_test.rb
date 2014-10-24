@@ -63,7 +63,7 @@ class BansControllerTest < ActionController::TestCase
     assert_not flash.key?(:error.to_s), flash[:error]
     assert_redirected_to :root
     assert_equal 1, user.bans.count
-    assert_equal actions+1, current_user.actions.count
+    assert_equal actions+2, current_user.actions.count
   end
 
   def ban_user_by_name(name)
@@ -78,12 +78,10 @@ class BansControllerTest < ActionController::TestCase
         }
     }
   end
-  private :ban_user_by_name
 
   # TODO find a better way than code duplication
   def current_user
-    return nil unless session.key? :tool_user_id
-    ToolUser.current ||= ToolUser.find_by(id: session[:tool_user_id])
+    return ToolUser.default_user unless session[:tool_user_id]
+    @current ||= ToolUser.find_by(id: session[:tool_user_id])
   end
-  private :current_user
 end

@@ -97,8 +97,6 @@ class UserTest < ActiveSupport::TestCase
       User.find 1337
     end
 
-    Action.expects('create!').with(tool_user: ToolUser.current, action: 'create', reference: user)
-
     assert_equal user, User.find_or_create_by(name: user.name)
   end
 

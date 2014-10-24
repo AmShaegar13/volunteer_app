@@ -8,16 +8,23 @@ class ApplicationController < ActionController::Base
   respond_to :json, :html
 
   def check_session
-    session[:tool_user_id]
-    unless session.key?(:tool_user_id) && ToolUser.find_by(id: session[:tool_user_id])
+    unless session[:tool_user_id] && ToolUser.find_by(id: session[:tool_user_id])
       reset_session
       redirect_to :auth
     end
   end
 
   def current_user
-    return nil unless session.key? :tool_user_id
+    return ToolUser.default_user unless session[:tool_user_id]
     @current ||= ToolUser.find_by(id: session[:tool_user_id])
   end
   private :current_user
+
+  # TODO find a better place for this
+  def find_or_create_user(user_params)
+    user = User.find_or_create_by(user_params.slice(:id, :name))
+    Action.create!(tool_user: current_user, action: 'create', reference: user) if user.new_record?
+
+    user
+  end
 end

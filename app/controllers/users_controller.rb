@@ -10,7 +10,7 @@ class UsersController < ApplicationController
   end
 
   def create
-    user = User.find_or_create_by params.require(:user).permit(:name)
+    user = find_or_create_user params.require(:user).permit(:name)
     redirect_to user
   end
 
