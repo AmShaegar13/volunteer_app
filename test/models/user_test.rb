@@ -8,7 +8,7 @@ class UserTest < ActiveSupport::TestCase
   test 'should create user' do
     assert_nil User.find_by name: 'Random User'
 
-    User.create! id: 42, name: 'Random User', level: 30
+    User.create! id: 42, name: 'Random User', level: 30, region: 'euw'
     assert_not_nil User.find 42
   end
 
@@ -45,6 +45,22 @@ class UserTest < ActiveSupport::TestCase
 
     assert_equal 1, user.smurfs.size
     assert_equal user, smurf.main
+  end
+
+  test 'should not set smurf-main association for different regions' do
+    user = users(:amshaegar)
+    smurf = users(:smurf_na)
+
+    assert_nil smurf.main
+
+    smurf.main = user
+    ex = assert_raises ActiveRecord::RecordInvalid do
+      smurf.save!
+    end
+    assert_equal 'Validation failed: Region must match main\'s region', ex.message
+
+    smurf.reload
+    assert_not_equal user, smurf.main
   end
 
   test 'should destroy bans of user' do
@@ -126,6 +142,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should return user name for search term' do
     users = User.search('shae')
+    assert_not_empty users
     users.each do |user|
       assert_match /shae/, user.name.downcase
     end
