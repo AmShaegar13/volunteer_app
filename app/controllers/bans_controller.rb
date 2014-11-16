@@ -31,7 +31,6 @@ class BansController < ApplicationController
       Action.create!(tool_user: current_user, action: 'create', reference: ban)
     end
   rescue => ex
-    pp ex.backtrace
     flash[:error] = ex.message
   ensure
     redirect_to :root
