@@ -7,6 +7,14 @@ class ApplicationController < ActionController::Base
 
   respond_to :json, :html
 
+  def default_url_options
+    if request.headers['X-Forwarded-Proto'] == 'https'
+      { protocol: 'https://' }
+    else
+      {}
+    end
+  end
+
   def check_session
     unless session[:tool_user_id] && ToolUser.find_by(id: session[:tool_user_id])
       reset_session
