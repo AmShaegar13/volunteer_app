@@ -30,6 +30,6 @@ class User < ActiveRecord::Base
 
   def self.search(name)
     return [] if name.blank?
-    User.where('name LIKE ?', "%#{name}%")
+    User.where('LOWER(name) LIKE LOWER(?)', "%#{name}%")
   end
 end
