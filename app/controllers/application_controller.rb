@@ -16,7 +16,7 @@ class ApplicationController < ActionController::Base
   end
 
   def check_session
-    unless session[:tool_user_id] && ToolUser.find_by(id: session[:tool_user_id])
+    if current_user == ToolUser.default_user
       reset_session
       redirect_to :auth
     end
