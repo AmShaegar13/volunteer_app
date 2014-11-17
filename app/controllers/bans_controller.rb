@@ -33,8 +33,6 @@ class BansController < ApplicationController
       Action.create!(tool_user: current_user, action: 'create', reference: ban)
     end
   rescue => ex
-    logger.error ex.message
-    logger.error ex.backtrace.to_yaml
     flash[:error] = ex.message
   ensure
     redirect_to :root

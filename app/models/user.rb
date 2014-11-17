@@ -8,7 +8,6 @@ class User < ActiveRecord::Base
   validates :id, presence: true, uniqueness: true
   validates :name, presence: true, uniqueness: true
   validates :level, presence: true, inclusion: { in: 1..30 }
-  validates :region, presence: true, inclusion: { in: %w(na euw eune) }
 
   def banned?
     !bans.empty? && bans.last.active?
@@ -31,6 +30,6 @@ class User < ActiveRecord::Base
 
   def self.search(name)
     return [] if name.blank?
-    User.where('LOWER(name) LIKE LOWER(?)', "%#{name}%")
+    User.where('name LIKE ?', "%#{name}%")
   end
 end
