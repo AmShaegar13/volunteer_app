@@ -91,7 +91,7 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should find user by id' do
     user = users(:amshaegar)
-    assert_equal user, User.find_or_create_by(id: user.id)
+    assert_equal user, User.find_or_create_by!(id: user.id)
   end
 
   test 'should find user by name' do
@@ -100,7 +100,7 @@ class UserTest < ActiveSupport::TestCase
     summoner = Summoner.new(id: user.id, name: user.name, summonerLevel: user.level)
     Summoner.expects(:find_by_name).with(user.name).returns(summoner)
 
-    assert_equal user, User.find_or_create_by(name: user.name)
+    assert_equal user, User.find_or_create_by!(name: user.name)
   end
 
   test 'should create user by name' do
@@ -113,7 +113,7 @@ class UserTest < ActiveSupport::TestCase
       User.find 1337
     end
 
-    assert_equal user, User.find_or_create_by(name: user.name)
+    assert_equal user, User.find_or_create_by!(name: user.name)
   end
 
   test 'should update user name' do
@@ -122,7 +122,7 @@ class UserTest < ActiveSupport::TestCase
     summoner = Summoner.new(id: user.id, name: 'New Name', summonerLevel: 30)
     Summoner.expects(:find_by_name).with(user.name).returns(summoner)
 
-    user = User.find_or_create_by(name: user.name)
+    user = User.find_or_create_by!(name: user.name)
 
     assert_equal 'New Name', user.name
     assert_equal 30, user.level

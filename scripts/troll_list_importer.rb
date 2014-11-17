@@ -13,7 +13,7 @@ class TrollListImporter
           reason: row["reason#{d}"]
         }
       end
-      user = User.find_or_create_by(name: name)
+      user = User.find_or_create_by!(name: name)
 
       bans.each do |duration, ban|
         if ban[:link] && ban[:reason]
