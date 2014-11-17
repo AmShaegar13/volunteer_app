@@ -1,25 +1,21 @@
 amshaegar:
   name: AmShaegar
   level: 30
-  region: euw
 
 humpel:
   name: Humpelstielzche
   level: 30
-  region: euw
 
 smurf_1:
   name: AmShaegarII
   main: amshaegar
   level: 5
-  region: euw
 
-smurf_na:
-  name: AmShaegarEUW
+smurf_2:
+  name: AmShaegarIII
+  main: amshaegar
   level: 5
-  region: na
 
 smurf_new:
   name: HumpelII
   level: 1
-  region: euw

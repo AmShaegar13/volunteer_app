@@ -5,20 +5,10 @@ class User < ActiveRecord::Base
   has_many :bans, -> { order 'duration = 0, created_at + INTERVAL duration DAY' }, dependent: :destroy
   has_many :actions, as: :reference, dependent: :destroy
 
-  with_options presence: true do |user|
-    user.validates :id, uniqueness: true
-    user.validates :name, uniqueness: true
-    user.validates :level, inclusion: { in: 1..30 }
-    user.validates :region, inclusion: { in: %w[ na euw eune ] }
-  end
-  validate :region_fits_main
-  validates_associated :smurfs
-
-  def region_fits_main
-    unless main.nil? || main.region == region
-      errors.add(:region, 'must match main\'s region')
-    end
-  end
+  validates :id, presence: true, uniqueness: true
+  validates :name, presence: true, uniqueness: true
+  validates :level, presence: true, inclusion: { in: 1..30 }
+  validates :region, presence: true, inclusion: { in: %w(na euw eune) }
 
   def banned?
     !bans.empty? && bans.last.active?
