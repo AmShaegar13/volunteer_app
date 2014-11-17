@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141116120301) do
+ActiveRecord::Schema.define(version: 20141113193829) do
 
   create_table "actions", force: true do |t|
     t.integer  "tool_user_id"
@@ -43,7 +43,6 @@ ActiveRecord::Schema.define(version: 20141116120301) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.integer  "level"
-    t.string   "region"
   end
 
   add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
