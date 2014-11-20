@@ -24,8 +24,6 @@ class Summoner < ActiveResource::Base
       names << fix_encoding(name, Encoding::WINDOWS_1252) rescue nil
       names = names.uniq * ','
       find "by-name/#{names}"
-    rescue ActiveResource::ResourceNotFound
-      nil
     end
 
     def fix_encoding(str, enc)

@@ -100,6 +100,18 @@ class UserTest < ActiveSupport::TestCase
     assert_equal user, User.find_or_create_by!(name: user.name)
   end
 
+  test 'should raise exception if summoner does not exist' do
+    name = 'NoNeXiStEnT'
+    ex = ActiveResource::ResourceNotFound
+    ex_msg = 'Failed.  Response code = 404.  Response message = Not Found.'
+
+    Summoner.expects(:find_by_name).with(name).raises(ex, ex_msg)
+
+    assert_raise ex, ex_msg do
+      User.find_or_create_by!(name: name)
+    end
+  end
+
   test 'should update user name' do
     user = users(:smurf_1)
 
