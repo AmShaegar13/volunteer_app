@@ -8,5 +8,3 @@ Resources.data = YAML.load_file('config/resources.yml')
 Rails.application.initialize!
 
 require 'pp'
-
-require 'authentication'
