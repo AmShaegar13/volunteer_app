@@ -102,8 +102,8 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should raise exception if summoner does not exist' do
     name = 'NoNeXiStEnT'
-    ex = ActiveResource::ResourceNotFound
-    ex_msg = 'Failed.  Response code = 404.  Response message = Not Found.'
+    ex = VolunteerApp::SummonerNotFound
+    ex_msg = "Summoner '#{name}' does not exist."
 
     Summoner.expects(:find_by_name).with(name).raises(ex, ex_msg)
 

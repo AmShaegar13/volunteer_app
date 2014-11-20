@@ -66,6 +66,21 @@ class BansControllerTest < ActionController::TestCase
     assert_equal actions+2, current_user.actions.count
   end
 
+  test 'should fail to create ban if user does not exist' do
+    name = 'NoNeXiStEnT'
+    ex_msg = "Summoner '#{name}' does not exist."
+
+    User.expects(:find_or_create_by!).with('name' => name).raises(
+        VolunteerApp::SummonerNotFound,
+        ex_msg
+    )
+
+    ban_user_by_name(name)
+
+    assert_equal ex_msg, flash[:error]
+    assert_redirected_to :root
+  end
+
   def ban_user_by_name(name)
     get :create, {
         ban: {

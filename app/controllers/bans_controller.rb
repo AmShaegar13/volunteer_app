@@ -11,10 +11,10 @@ class BansController < ApplicationController
   end
 
   def create
+    user_params = params.require(:ban).require(:user).permit(:id, :name, :main)
+
     Ban.transaction do
-      user_params = params.require(:ban).require(:user).permit(:id, :name, :main)
       user = find_or_create_user user_params
-      raise ArgumentError, "User '#{user_params[:name]}' does not exist." if user.nil?
 
       if user_params.key?(:main) && !user_params[:main].blank?
         main = find_or_create_user(name: user_params[:main])
@@ -33,6 +33,8 @@ class BansController < ApplicationController
       Action.create!(tool_user: current_user, action: 'create', reference: ban)
     end
   rescue => ex
+    logger.debug ex.message
+    logger.debug ex.backtrace
     flash[:error] = ex.message
   ensure
     redirect_to :root
