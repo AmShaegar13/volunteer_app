@@ -24,18 +24,10 @@ class UsersController < ApplicationController
       end
 
       format.html do
+        # TODO consider duplicate names
         user = User.find_by(name: name)
         if user.nil?
-          summoner = Summoner.find_by_name(name)
-          if summoner
-            user = User.find_by(id: summoner.id)
-            if user.nil?
-              flash[:error] = "Summoner '#{name}' not banned yet."
-              flash[:create_user] = name
-            end
-          else
-            flash[:error] = "Summoner '#{name}' does not exist."
-          end
+          flash[:error] = "Summoner '#{name}' not banned yet."
         end
 
         redirect_to(user.nil? ? :root : user_path(user))

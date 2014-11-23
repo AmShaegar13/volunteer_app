@@ -18,13 +18,13 @@ class Summoner < ActiveResource::Base
       if params.keys.sort == [:name, :region]
         self.site = Resources.data['riot_api']['base_url'][params[:region]]
         @@region = params[:region]
-        find_by_name params[:name]
+        find_by_name! params[:name]
       else
-        super params
+        nil
       end
     end
 
-    def find_by_name(name)
+    def find_by_name!(name)
       names = [name]
       names << fix_encoding(name, Encoding::ISO8859_1) rescue nil
       names << fix_encoding(name, Encoding::ISO8859_2) rescue nil
@@ -32,7 +32,7 @@ class Summoner < ActiveResource::Base
       names = names.uniq * ','
       find "by-name/#{names}"
     end
-    private :find_by_name
+    private :find_by_name!
 
     def fix_encoding(str, enc)
       str = str.encode(enc).force_encoding(Encoding::UTF_8)
