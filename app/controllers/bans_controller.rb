@@ -11,13 +11,16 @@ class BansController < ApplicationController
   end
 
   def create
+    ban_params = params.require(:ban).permit(:duration, :reason, :link)
     user_params = params.require(:ban).require(:user).permit(:id, :name, :main)
+    region = ban_params[:link].match(/forums\.(.+?)\.leagueoflegends\.com/)[1]
+    user_params.merge!(region: region)
 
     Ban.transaction do
       user = find_or_create_user user_params
 
       if user_params.key?(:main) && !user_params[:main].blank?
-        main = find_or_create_user(name: user_params[:main])
+        main = find_or_create_user(name: user_params[:main], region: region)
         unless main.nil?
           User.transaction do
             user.main = main
@@ -29,7 +32,7 @@ class BansController < ApplicationController
         end
       end
 
-      ban = Ban.create!(params.require(:ban).permit(:duration, :reason, :link).merge(user: user))
+      ban = Ban.create!(ban_params.merge(user: user))
       Action.create!(tool_user: current_user, action: 'create', reference: ban)
     end
   rescue => ex

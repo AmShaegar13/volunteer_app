@@ -6,6 +6,7 @@ class TrollListImporter
 
     CSV.foreach('tmp/troll_list_dump.csv', headers: true) do |row|
       name = row['name']
+      region = 'euw'
       bans = {}
       durations.each do |d|
         bans[d] = {
@@ -13,7 +14,7 @@ class TrollListImporter
           reason: row["reason#{d}"]
         }
       end
-      user = User.find_or_create_by!(name: name)
+      user = User.find_or_create_by!(name: name, region: region)
 
       bans.each do |duration, ban|
         if ban[:link] && ban[:reason]

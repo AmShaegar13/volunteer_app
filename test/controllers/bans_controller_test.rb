@@ -11,8 +11,8 @@ class BansControllerTest < ActionController::TestCase
     bans = user.bans.count
     actions = current_user.actions.count
 
-    User.expects(:find_or_create_by!).with('id' => user.id.to_s).returns(user)
-    User.expects(:find_or_create_by!).with(name: main.name).returns(main)
+    User.expects(:find_or_create_by!).with('id' => user.id.to_s, 'region' => user.region).returns(user)
+    User.expects(:find_or_create_by!).with(name: main.name, region: user.region).returns(main)
 
     get :create, {
         ban: {
@@ -38,7 +38,7 @@ class BansControllerTest < ActionController::TestCase
     bans = user.bans.count
     actions = current_user.actions.count
 
-    User.expects(:find_or_create_by!).with('name' => user.name).returns(user)
+    User.expects(:find_or_create_by!).with('name' => user.name, 'region' => user.region).returns(user)
 
     ban_user_by_name(user.name)
 
@@ -49,14 +49,14 @@ class BansControllerTest < ActionController::TestCase
   end
 
   test 'should create ban with name of new user' do
-    user = User.new id: 1337, name: 'DummyUser'
+    user = User.new id: 1337, name: 'DummyUser', region: 'euw'
     actions = current_user.actions.count
 
     assert_raise ActiveRecord::RecordNotFound do
       User.find 1337
     end
 
-    User.expects(:find_or_create_by!).with('name' => user.name).returns(user)
+    User.expects(:find_or_create_by!).with('name' => user.name, 'region' => user.region).returns(user)
 
     ban_user_by_name(user.name)
 
@@ -70,7 +70,7 @@ class BansControllerTest < ActionController::TestCase
     name = 'NoNeXiStEnT'
     ex_msg = "Summoner '#{name}' does not exist."
 
-    User.expects(:find_or_create_by!).with('name' => name).raises(
+    User.expects(:find_or_create_by!).with('name' => name, 'region' => 'euw').raises(
         VolunteerApp::SummonerNotFound,
         ex_msg
     )

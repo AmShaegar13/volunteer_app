@@ -30,7 +30,7 @@ class User < ActiveRecord::Base
 
     summoner = Summoner.find_by! name: params[:name], region: params[:region]
 
-    user = find_or_create_by id: summoner.id
+    user = find_or_create_by id: summoner.id, region: params[:region]
     user.name = summoner.name
     user.level = summoner.summonerLevel
     user.save!

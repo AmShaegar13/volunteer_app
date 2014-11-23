@@ -32,7 +32,7 @@ class ApplicationController < ActionController::Base
 
   # TODO find a better place for this
   def find_or_create_user(user_params)
-    user = User.find_or_create_by!(user_params.slice(:id, :name))
+    user = User.find_or_create_by!(user_params.slice(:id, :name, :region))
     Action.create!(tool_user: current_user, action: 'create', reference: user) if user.new_record?
 
     user
