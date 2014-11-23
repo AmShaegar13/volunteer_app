@@ -17,7 +17,7 @@ class User < ActiveRecord::Base
     return User.find params[:id] if params.key? :id
     raise ArgumentError, 'No valid parameter found. Valid parameters are [:id, :name]' unless params.key? :name
 
-    summoner = Summoner.find_by_name params[:name]
+    summoner = Summoner.find_by! name: params[:name], region: params[:region]
 
     user = find_or_create_by id: summoner.id
     user.name = summoner.name

@@ -1,5 +1,7 @@
 riot_api:
-  base_url: 'https://euw.api.pvp.net/api/lol/euw/v1.4/'
-  api_key:
+  base_url:
+   na: 'https://na.api.pvp.net/api/lol/:region/v1.4/'
+   euw: 'https://euw.api.pvp.net/api/lol/:region/v1.4/'
+   eune: 'https://eune.api.pvp.net/api/lol/:region/v1.4/'
 auth_service:
   url: 'https://tools.wrenchbox.de/api/auth.php'
