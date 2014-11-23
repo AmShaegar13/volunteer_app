@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141116120301) do
+ActiveRecord::Schema.define(version: 20141123164237) do
 
   create_table "actions", force: true do |t|
     t.integer  "tool_user_id"
@@ -44,8 +44,9 @@ ActiveRecord::Schema.define(version: 20141116120301) do
     t.datetime "updated_at"
     t.integer  "level"
     t.string   "region"
+    t.integer  "summoner_id"
   end
 
-  add_index "users", ["name"], name: "index_users_on_name", unique: true, using: :btree
+  add_index "users", ["summoner_id", "region"], name: "index_users_on_summoner_id_and_region", unique: true, using: :btree
 
 end

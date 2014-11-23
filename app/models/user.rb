@@ -7,7 +7,7 @@ class User < ActiveRecord::Base
 
   with_options presence: true do |user|
     user.validates :id, uniqueness: true
-    user.validates :name, uniqueness: true
+    user.validates :name
     user.validates :level, inclusion: { in: 1..30 }
     user.validates :region, inclusion: { in: %w[ na euw eune ] }
   end

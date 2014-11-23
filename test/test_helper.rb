@@ -4,6 +4,8 @@ require 'rails/test_help'
 require 'active_resource'
 require 'pp'
 
+ActiveRecord::Migration.maintain_test_schema!
+
 class ActiveSupport::TestCase
   # Setup all fixtures in test/fixtures/*.yml for all tests in alphabetical order.
   fixtures :all
