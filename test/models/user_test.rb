@@ -158,10 +158,11 @@ class UserTest < ActiveSupport::TestCase
 
   test 'should find user with region by name' do
     user = users(:amshaegar)
-    assert_equal user, User.find_by(name: 'AmShaegar (euw)')
+    assert_equal user, User.find_by(name: '%s (%s)' % [user.name, user.region])
   end
 
   test 'should not find user with wrong region' do
-    assert_nil User.find_by(name: 'AmShaegar (none)')
+    user = users(:amshaegar)
+    assert_nil User.find_by(name: '%s (none)' % [user.region])
   end
 end

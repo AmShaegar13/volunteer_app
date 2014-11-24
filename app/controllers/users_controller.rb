@@ -27,7 +27,7 @@ class UsersController < ApplicationController
         # TODO consider duplicate names
         user = User.find_by(name: name)
         if user.nil?
-          flash[:error] = "Summoner '#{name}' not banned yet."
+          flash[:error] = "Summoner '#{name}' not found."
         end
 
         redirect_to(user.nil? ? :root : user_path(user))
