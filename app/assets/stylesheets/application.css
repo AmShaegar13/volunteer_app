@@ -22,3 +22,9 @@
 .ui-menu-item {
     font-size: 13px;
 }
+
+.alert {
+    width: 750px;
+    padding: 10px;
+    margin: 5px 0;
+}
