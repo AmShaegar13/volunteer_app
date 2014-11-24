@@ -9,10 +9,10 @@
 <body>
 
 <% if flash.key? :error.to_s -%>
-  <%= render partial: 'common/error' %>
+  <%= render partial: 'common/error', locals: { error: flash[:error] } %>
 <% end -%>
 <% if flash.key? :notice.to_s -%>
-  <%= render partial: 'common/notice' %>
+  <%= render partial: 'common/notice', locals: { notice: flash[:notice] } %>
 <% end -%>
 <%= yield %>
 
