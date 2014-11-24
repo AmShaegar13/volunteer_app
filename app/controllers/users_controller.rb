@@ -19,7 +19,7 @@ class UsersController < ApplicationController
     respond_to do |format|
       format.json do
         users = User.search(name)
-        users = users.select(:name).map(&:name) unless users.empty?
+        users = users.select(:name, :region).map { |user| '%s (%s)' % [user.name, user.region] } unless users.empty?
         respond_with users
       end
 
