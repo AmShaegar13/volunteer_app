@@ -44,4 +44,26 @@ class User < ActiveRecord::Base
     return [] if name.blank?
     User.where('LOWER(name) LIKE LOWER(?)', "%#{name}%")
   end
+
+  def self.find_by(opts)
+    extract_region_from_name opts
+    super opts
+  end
+
+  def self.find_by!(opts)
+    extract_region_from_name opts
+    super opts
+  end
+
+  def self.extract_region_from_name(opts)
+    if opts.key? :name
+      if opts[:name].match(/\s\(.+\)/)
+        region = opts[:name].slice! /\s?\(.+\)/
+        opts[:region] = region[/\((.+)\)/, 1]
+      end
+    end
+
+    opts
+  end
+  private_class_method :extract_region_from_name
 end
