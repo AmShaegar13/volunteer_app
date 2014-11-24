@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
     return User.find params[:id] if params.key? :id
     raise ArgumentError, 'No valid parameter found. Valid parameters are [:id, :name]' unless params.key? :name
 
+    extract_region_from_name! params
     summoner = Summoner.find_by! name: params[:name], region: params[:region]
 
     user = find_or_create_by id: summoner.id, region: params[:region]
@@ -46,24 +47,27 @@ class User < ActiveRecord::Base
   end
 
   def self.find_by(opts)
-    extract_region_from_name opts
+    extract_region_from_name! opts
     super opts
   end
 
   def self.find_by!(opts)
-    extract_region_from_name opts
+    extract_region_from_name! opts
     super opts
   end
 
-  def self.extract_region_from_name(opts)
+  def self.extract_region_from_name!(opts)
     if opts.key? :name
       if opts[:name].match(/\s\(.+\)/)
-        region = opts[:name].slice! /\s?\(.+\)/
-        opts[:region] = region[/\((.+)\)/, 1]
+        region = opts[:name].slice!(/\s?\(.+\)/)[/\((.+)\)/, 1]
+        if opts.key?(:region) && opts[:region] != region
+          raise ArgumentError, 'Cannot extract region from name. Region already set: ' + opts.inspect
+        end
+        opts[:region] = region
       end
     end
 
     opts
   end
-  private_class_method :extract_region_from_name
+  private_class_method :extract_region_from_name!
 end
