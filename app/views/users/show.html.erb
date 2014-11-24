@@ -5,6 +5,9 @@
   <tr>
     <td>Level:</td><td><%= @user.level %></td>
   </tr>
+  <tr>
+    <td>Region:</td><td><%= @user.region %></td>
+  </tr>
   <% if @user.main -%>
     <tr>
       <td>Main:</td><td><%= link_to @user.main.name, @user.main %></td>
