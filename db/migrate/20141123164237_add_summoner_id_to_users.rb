@@ -15,7 +15,7 @@ class AddSummonerIdToUsers < ActiveRecord::Migration
         new_id += 1
       end
 
-      execute('ALTER TABLE users AUTO_INCREMENT = ' + new_id)
+      execute("ALTER TABLE users AUTO_INCREMENT = #{new_id}")
     end
 
     User.joins('JOIN users AS mains ON mains.summoner_id = users.main_id').update_all('users.main_id=mains.id')
