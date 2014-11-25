@@ -6,10 +6,10 @@ class User < ActiveRecord::Base
   has_many :actions, as: :reference, dependent: :destroy
 
   with_options presence: true do |user|
-    user.validates :id, uniqueness: true
     user.validates :name
     user.validates :level, inclusion: { in: 1..30 }
     user.validates :region, inclusion: { in: %w[ na euw eune ] }
+    user.validates :summoner_id
   end
   validate :region_fits_main
   validates_associated :smurfs
@@ -31,7 +31,7 @@ class User < ActiveRecord::Base
     extract_region_from_name! params
     summoner = Summoner.find_by! name: params[:name], region: params[:region]
 
-    user = find_or_create_by id: summoner.id, region: params[:region]
+    user = find_or_create_by summoner_id: summoner.id, region: params[:region]
     user.name = summoner.name
     user.level = summoner.summonerLevel
     user.save!

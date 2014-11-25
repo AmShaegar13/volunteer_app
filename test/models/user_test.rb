@@ -1,17 +1,6 @@
 require 'test_helper'
 
 class UserTest < ActiveSupport::TestCase
-  test 'should find by name' do
-    assert_equal users(:amshaegar), User.find_by(name: 'AmShaegar')
-  end
-
-  test 'should create user' do
-    assert_nil User.find_by name: 'Random User'
-
-    User.create! id: 42, name: 'Random User', level: 30, region: 'euw'
-    assert_not_nil User.find 42
-  end
-
   test 'should have smurf-main association' do
     user = users(:amshaegar)
     assert user.smurfs.include?(users(:smurf_1))
@@ -97,45 +86,57 @@ class UserTest < ActiveSupport::TestCase
   test 'should find user by name and region' do
     user = users(:amshaegar)
 
-    summoner = mock('Summoner', id: user.id, name: user.name, summonerLevel: user.level)
+    summoner = mock('Summoner', id: user.summoner_id, name: user.name, summonerLevel: user.level)
     Summoner.expects(:find_by!).with(name: user.name, region: user.region).returns(summoner)
 
     assert_equal user, User.find_or_create_by!(name: user.name, region: user.region)
   end
 
   test 'should create user by name and region' do
-    user = User.new id: 1337, name: 'DummyUser', level: 15, region: 'euw'
+    user = User.new summoner_id: 1337, name: 'DummyUser', level: 15, region: 'euw'
 
-    summoner = mock('Summoner', id: user.id, name: user.name, summonerLevel: user.level)
+    summoner = mock('Summoner', id: user.summoner_id, name: user.name, summonerLevel: user.level)
     Summoner.expects(:find_by!).with(name: user.name, region: user.region).returns(summoner)
 
     assert_raise ActiveRecord::RecordNotFound do
-      User.find user.id
+      User.find_by! summoner_id: user.summoner_id
     end
 
-    assert_equal user, User.find_or_create_by!(name: user.name, region: user.region)
+    new = User.find_or_create_by!(name: user.name, region: user.region)
+
+    assert_not_nil new
+    assert_equal user.summoner_id, new.summoner_id
+    assert_equal user.name, new.name
+    assert_equal user.level, new.level
+    assert_equal user.region, new.region
   end
 
   test 'should find user by name with region' do
     user = users(:amshaegar)
 
-    summoner = mock('Summoner', id: user.id, name: user.name, summonerLevel: user.level)
+    summoner = mock('Summoner', id: user.summoner_id, name: user.name, summonerLevel: user.level)
     Summoner.expects(:find_by!).with(name: user.name, region: user.region).returns(summoner)
 
     assert_equal user, User.find_or_create_by!(name: '%s (%s)' % [user.name, user.region])
   end
 
   test 'should create user by name with region' do
-    user = User.new id: 1337, name: 'DummyUser', level: 15, region: 'euw'
+    user = User.new summoner_id: 1337, name: 'DummyUser', level: 15, region: 'euw'
 
-    summoner = mock('Summoner', id: user.id, name: user.name, summonerLevel: user.level)
+    summoner = mock('Summoner', id: user.summoner_id, name: user.name, summonerLevel: user.level)
     Summoner.expects(:find_by!).with(name: user.name, region: user.region).returns(summoner)
 
     assert_raise ActiveRecord::RecordNotFound do
-      User.find user.id
+      User.find_by! summoner_id: user.summoner_id
     end
 
-    assert_equal user, User.find_or_create_by!(name: '%s (%s)' % [user.name, user.region])
+    new = User.find_or_create_by!(name: '%s (%s)' % [user.name, user.region])
+
+    assert_not_nil new
+    assert_equal user.summoner_id, new.summoner_id
+    assert_equal user.name, new.name
+    assert_equal user.level, new.level
+    assert_equal user.region, new.region
   end
 
   test 'should raise exception if summoner does not exist' do

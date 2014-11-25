@@ -2,24 +2,29 @@ amshaegar:
   name: AmShaegar
   level: 30
   region: euw
+  summoner_id: 123456
 
 humpel:
   name: Humpelstielzche
   level: 30
   region: euw
+  summoner_id: 654321
 
 smurf_1:
   name: AmShaegarII
   main: amshaegar
   level: 5
   region: euw
+  summoner_id: 456789
 
 smurf_na:
   name: AmShaegarEUW
   level: 5
   region: na
+  summoner_id: 123456
 
 smurf_new:
   name: HumpelII
   level: 1
   region: euw
+  summoner_id: 987654
