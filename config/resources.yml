@@ -1,7 +1,8 @@
 riot_api:
   base_url:
-   na: 'https://na.api.pvp.net/api/lol/:region/v1.4/'
-   euw: 'https://euw.api.pvp.net/api/lol/:region/v1.4/'
-   eune: 'https://eune.api.pvp.net/api/lol/:region/v1.4/'
+    na: 'https://na.api.pvp.net/api/lol/:region/v1.4/'
+    euw: 'https://euw.api.pvp.net/api/lol/:region/v1.4/'
+    eune: 'https://eune.api.pvp.net/api/lol/:region/v1.4/'
+  status_url: 'https://developer.riotgames.com/status'
 auth_service:
   url: 'https://tools.wrenchbox.de/api/auth.php'

@@ -14,6 +14,21 @@ class Summoner < ActiveResource::Base
       super(prefix_options.merge({ region: @@region }), query_options.merge({ api_key: Rails.application.secrets.riot_api }))
     end
 
+    def find(*args)
+      super(*args)
+    rescue ActiveResource::ConnectionError => e
+      case e.response.code
+        when 404
+          raise VolunteerApp::SummonerNotFound, "Summoner '#{params[:name]}' does not exist."
+        when 429
+          raise VolunteerApp::RateLimited, 'Riot API busy. Please try again later.'
+        when 503
+          raise VolunteerApp::ServiceUnavailable, "Riot API currently <a href=\"#{Resources['riot_api']['status_url']}\">unavailable</a>."
+        else
+          raise e
+      end
+    end
+
     def find_by!(params = {})
       if params.keys.sort == [:name, :region]
         self.site = Resources['riot_api']['base_url'][params[:region]]

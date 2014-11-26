@@ -37,8 +37,6 @@ class User < ActiveRecord::Base
     user.save!
 
     user
-  rescue ActiveResource::ResourceNotFound
-    raise VolunteerApp::SummonerNotFound, "Summoner '#{params[:name]}' does not exist."
   end
 
   def self.search(name)
