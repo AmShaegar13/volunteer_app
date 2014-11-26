@@ -19,7 +19,7 @@ class Summoner < ActiveResource::Base
     rescue ActiveResource::ConnectionError => e
       case e.response.code
         when 404
-          raise VolunteerApp::SummonerNotFound, "Summoner '#{params[:name]}' does not exist."
+          raise VolunteerApp::SummonerNotFound, 'Summoner does not exist.'
         when 429
           raise VolunteerApp::RateLimited, 'Riot API busy. Please try again later.'
         when 503

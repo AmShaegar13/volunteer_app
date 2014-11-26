@@ -143,7 +143,7 @@ class UserTest < ActiveSupport::TestCase
     name = 'NoNeXiStEnT'
     region = 'euw'
     ex = VolunteerApp::SummonerNotFound
-    ex_msg = "Summoner '#{name}' does not exist."
+    ex_msg = 'Summoner does not exist.'
 
     Summoner.expects(:find_by!).with(name: name, region: region).raises(ex, ex_msg)
 
