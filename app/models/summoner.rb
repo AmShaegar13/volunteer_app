@@ -16,7 +16,7 @@ class Summoner < ActiveResource::Base
 
     def find_by!(params = {})
       if params.keys.sort == [:name, :region]
-        self.site = Resources.data['riot_api']['base_url'][params[:region]]
+        self.site = Resources['riot_api']['base_url'][params[:region]]
         @@region = params[:region]
         find_by_name! params[:name]
       else
