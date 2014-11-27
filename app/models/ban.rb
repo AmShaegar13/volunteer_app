@@ -11,6 +11,8 @@ class Ban < ActiveRecord::Base
       with: %r#http://forums\.(na|euw|eune)\.leagueoflegends\.com/board/showthread.php\?[tp]=\d+.*#
   }
 
+  scope :ordered_by_end, lambda { order('created_at + INTERVAL duration DAY DESC') }
+
   def ends
     created_at + duration.days
   end
@@ -24,10 +26,6 @@ class Ban < ActiveRecord::Base
   end
 
   def creator
-    actions.where(action: 'create').first.tool_user
-  end
-
-  def self.ordered_by_end
-    Ban.all.order('created_at + INTERVAL duration DAY DESC')
+    actions.creation.tool_user
   end
 end

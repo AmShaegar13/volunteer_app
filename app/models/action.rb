@@ -5,4 +5,6 @@ class Action < ActiveRecord::Base
   validates :tool_user, presence: true
   validates :action, presence: true
   validates :reference, presence: true
+
+  scope :creation, lambda { where(action: 'create').first }
 end

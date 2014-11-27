@@ -14,6 +14,8 @@ class User < ActiveRecord::Base
   validate :region_fits_main
   validates_associated :smurfs
 
+  scope :search, lambda { |name| where('LOWER(name) LIKE LOWER(?)', "%#{name}%") }
+
   def region_fits_main
     unless main.nil? || main.region == region
       errors.add(:region, 'must match main\'s region')
@@ -37,11 +39,6 @@ class User < ActiveRecord::Base
     user.save!
 
     user
-  end
-
-  def self.search(name)
-    return [] if name.blank?
-    User.where('LOWER(name) LIKE LOWER(?)', "%#{name}%")
   end
 
   def self.find_by(opts)
