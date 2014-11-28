@@ -5,6 +5,8 @@ class User < ActiveRecord::Base
   has_many :bans, -> { order 'duration = 0, created_at + INTERVAL duration DAY' }, dependent: :destroy
   has_many :actions, as: :reference, dependent: :destroy
 
+  scope :search, -> name { where('LOWER(name) LIKE LOWER(?)', "%#{name}%") }
+
   with_options presence: true do |user|
     user.validates :name
     user.validates :level, inclusion: { in: 1..30 }
@@ -13,8 +15,6 @@ class User < ActiveRecord::Base
   end
   validate :region_fits_main
   validates_associated :smurfs
-
-  scope :search, lambda { |name| where('LOWER(name) LIKE LOWER(?)', "%#{name}%") }
 
   def region_fits_main
     unless main.nil? || main.region == region

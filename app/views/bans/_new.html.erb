@@ -13,7 +13,7 @@
     <%= form.text_field :reason %>
     <%= javascript_tag do %>
       $('#ban_reason').autocomplete({
-        source: <%= Ban.select(:reason).group(:reason).order('COUNT(reason) DESC').limit(15).map(&:reason).to_json.html_safe %>,
+        source: <%= Ban.common_reasons.to_json.html_safe %>,
         minLength: 0
       }).bind('focus', function() {
       $(this).autocomplete('search');

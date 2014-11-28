@@ -93,10 +93,4 @@ class BansControllerTest < ActionController::TestCase
         }
     }
   end
-
-  # TODO find a better way than code duplication
-  def current_user
-    return ToolUser.default_user unless session[:tool_user_id]
-    @current ||= ToolUser.find_by(id: session[:tool_user_id])
-  end
 end

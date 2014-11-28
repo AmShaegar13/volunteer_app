@@ -1,7 +1,7 @@
 class BansController < ApplicationController
   def index
     limit = params[:limit] ? params[:limit] : 25
-    @bans = Ban.order(created_at: :desc).limit(limit)
+    @bans = Ban.includes(:user, :creator).order(created_at: :desc).limit(limit)
     self.new
   end
 
@@ -31,7 +31,7 @@ class BansController < ApplicationController
         end
       end
 
-      ban = Ban.create!(ban_params.merge(user: user))
+      ban = Ban.create!(ban_params.merge(user: user).merge(creator: current_user))
       Action.create!(tool_user: current_user, action: 'create', reference: ban)
     end
   rescue => ex

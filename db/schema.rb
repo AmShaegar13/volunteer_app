@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20141123164237) do
+ActiveRecord::Schema.define(version: 20141128005258) do
 
   create_table "actions", force: true do |t|
     t.integer  "tool_user_id"
@@ -29,6 +29,7 @@ ActiveRecord::Schema.define(version: 20141123164237) do
     t.datetime "updated_at"
     t.string   "reason"
     t.string   "link"
+    t.integer  "creator_id"
   end
 
   create_table "tool_users", force: true do |t|
