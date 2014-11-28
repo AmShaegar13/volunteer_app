@@ -12,5 +12,8 @@ class ActiveSupport::TestCase
 
   VALID_BAN_LINK = 'http://forums.euw.leagueoflegends.com/board/showthread.php?t=123456'
 
-  # Add more helper methods to be used by all tests here...
+  def current_user
+    return ToolUser.default_user unless session[:tool_user_id]
+    @current ||= ToolUser.find_by(id: session[:tool_user_id])
+  end
 end
