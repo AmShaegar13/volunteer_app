@@ -1,7 +1,9 @@
 class BansController < ApplicationController
   def index
     limit = params[:limit] ? params[:limit] : 25
-    @bans = Ban.includes(:user, :creator).order(created_at: :desc).limit(limit)
+    @bans = cache "bans/#{Ban.count}-#{limit}" do
+      Ban.includes(:user, :creator).order(created_at: :desc).limit(limit).to_a
+    end
     self.new
   end
 
