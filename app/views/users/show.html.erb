@@ -19,7 +19,7 @@
     </tr>
   <% end -%>
   <tr>
-    <td>Total bans:</td><td><%= @user.bans.count %></td>
+    <td>Total bans:</td><td><%= @user.bans.size %></td>
   </tr>
   <% if @user.banned? -%>
     <tr>

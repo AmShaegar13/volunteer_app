@@ -4,7 +4,7 @@ class UsersController < ApplicationController
   end
 
   def show
-    @user = User.find(params[:id])
+    @user = User.includes(:smurfs, :bans).find(params[:id])
     @bans = @user.bans.reverse
     @blank_ban = Ban.new
   end
