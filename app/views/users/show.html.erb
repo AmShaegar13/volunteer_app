@@ -19,11 +19,11 @@
     </tr>
   <% end -%>
   <tr>
-    <td>Total bans:</td><td><%= @user.bans.size %></td>
+    <td>Total bans:</td><td><%= @bans.size %></td>
   </tr>
   <% if @user.banned? -%>
     <tr>
-      <td>Banned until:</td><td><%= @user.bans.last.ends %></td>
+      <td>Banned <%= @bans.first.permanent? ? 'since' : 'until' %>:</td><td><%= @bans.first.ends %></td>
     </tr>
   <% end -%>
 </table>
