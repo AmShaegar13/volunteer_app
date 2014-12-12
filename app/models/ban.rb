@@ -1,4 +1,6 @@
 class Ban < ActiveRecord::Base
+  include Yap
+
   belongs_to :user
   belongs_to :creator, class_name: ToolUser.name, foreign_key: 'creator_id'
   has_many :actions, as: :reference, dependent: :destroy

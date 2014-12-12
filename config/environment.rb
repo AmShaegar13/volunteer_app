@@ -8,3 +8,9 @@ Resources.data = YAML.load_file('config/resources.yml')
 Rails.application.initialize!
 
 require 'pp'
+
+Yap.configure do |defaults|
+  defaults.per_page = 25
+  defaults.sort = :created_at
+  defaults.direction = :desc
+end
