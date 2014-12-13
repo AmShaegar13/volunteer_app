@@ -5,7 +5,7 @@ class User < ActiveRecord::Base
   has_many :bans, -> { order 'duration = 0, created_at + INTERVAL duration DAY' }, dependent: :destroy
   has_many :actions, as: :reference, dependent: :destroy
 
-  scope :search, -> name { where('LOWER(name) LIKE LOWER(?)', "%#{name}%") }
+  scope :search, -> name { where('LOWER(name) LIKE LOWER(?) OR name IN (?)', "%#{name}%", Summoner.brute_force_encoding(name)) }
 
   with_options presence: true do |user|
     user.validates :name

@@ -188,4 +188,10 @@ class UserTest < ActiveSupport::TestCase
     user = users(:amshaegar)
     assert_nil User.find_by(name: '%s (none)' % [user.region])
   end
+
+  test 'should do exact match for array' do
+    users = User.search('fÃ²Ã²bar')
+    assert_equal 1, users.size
+    assert_equal users(:broken_encoding), users.take
+  end
 end

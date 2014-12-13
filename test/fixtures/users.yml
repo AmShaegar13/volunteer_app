@@ -28,3 +28,9 @@ smurf_new:
   level: 1
   region: euw
   summoner_id: 987654
+
+broken_encoding:
+  name: "fòòbar"
+  level: 1
+  region: euw
+  summoner_id: 147258

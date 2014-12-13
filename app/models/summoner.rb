@@ -39,12 +39,16 @@ class Summoner < ActiveResource::Base
       end
     end
 
-    def find_by_name!(name)
+    def brute_force_encoding(name)
       names = [name]
       names << fix_encoding(name, Encoding::ISO8859_1) rescue nil
       names << fix_encoding(name, Encoding::ISO8859_2) rescue nil
       names << fix_encoding(name, Encoding::WINDOWS_1252) rescue nil
-      names = names.uniq * ','
+      names.uniq
+    end
+
+    def find_by_name!(name)
+      names = brute_force_encoding(name) * ','
       find "by-name/#{names}"
     end
     private :find_by_name!
