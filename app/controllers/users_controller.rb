@@ -18,9 +18,11 @@ class UsersController < ApplicationController
     name = params.require(:search_query) rescue nil
     respond_to do |format|
       format.json do
-        users = User.search(name)
-        users = users.select(:name, :region).map { |user| '%s (%s)' % [user.name, user.region] } unless users.empty?
-        respond_with users
+        respond_with(if params[:include_proposal]
+          User.search_name_with_proposal(name)
+        else
+          User.search_name(name)
+        end)
       end
 
       format.html do

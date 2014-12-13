@@ -65,4 +65,18 @@ class User < ActiveRecord::Base
     opts
   end
   private_class_method :extract_region_from_name!
+
+  def self.search_name(name)
+    search(name).map(&:name_with_region)
+  end
+
+  def self.search_name_with_proposal(name)
+    search(name).includes(:bans).map do |user|
+      { name: user.name_with_region, proposal: Ban.propose(user) }
+    end
+  end
+
+  def name_with_region
+    '%s (%s)' % [name, region]
+  end
 end

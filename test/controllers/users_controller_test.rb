@@ -7,10 +7,14 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should return json with user names' do
     @request.accept = 'application/json'
+
     get :search, search_query: 'shae'
     assert_response :success
+    assert_match 'application/json', @response.headers['Content-Type']
+
     json = JSON @response.body
     assert_not_equal 0, json.size
+
     json.each do |name|
       assert_not_nil User.find_by name: name
     end
@@ -18,10 +22,27 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should return empty json' do
     @request.accept = 'application/json'
+
     get :search, search_query: 'NoNeXiStEnT'
     assert_response :success
+
     json = JSON @response.body
     assert_equal 0, json.size
+  end
+
+  test 'should return json with user names and proposal' do
+    @request.accept = 'application/json'
+
+    get :search, search_query: 'shae', include_proposal: true
+    assert_response :success
+
+    json = JSON @response.body
+    assert_not_equal 0, json.size
+
+    json.each do |user|
+      assert_not_nil User.find_by name: user['name']
+      assert_includes Ban::ALLOWED_DURATIONS, user['proposal']
+    end
   end
 
   test 'should redirect to user if found' do
