@@ -4,11 +4,14 @@
     <tr>
       <td><%= fu.label :name, 'User' %></td>
       <td>
-        <%= fu.text_field :name %>
+        <%= fu.text_field :name, data: { protected: true } %>
         <%= javascript_tag do %>
           $('#ban_user_name').autocomplete({
             source: getUsers,
-            minLength: 0
+            minLength: 0,
+            select: function(event, ui) {
+              $('#ban_duration').val(ui.item.proposal);
+            }
           });
         <% end %>
       </td>
