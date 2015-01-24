@@ -7,6 +7,7 @@ class Ban < ActiveRecord::Base
 
   scope :common_reasons, -> { select(:reason).group(:reason).order('COUNT(reason) DESC').limit(15) }
   scope :ordered_by_end, -> { order('created_at + INTERVAL duration DAY DESC') }
+  scope :with_user_and_creator, -> { includes(:user, :creator) }
 
   with_options presence: true do |ban|
     ban.validates :duration, inclusion: {
@@ -21,6 +22,15 @@ class Ban < ActiveRecord::Base
   end
 
   ALLOWED_DURATIONS = [1, 3, 7, 14, 0]
+
+  def self.map_name_to_column(name)
+    case name
+      when 'banned_by' then 'tool_users.name'
+      when 'creator' then 'tool_users.name'
+      when 'region' then 'users.region'
+      when 'summoner' then 'users.name'
+    end
+  end
 
   def ends
     created_at + duration.days

@@ -1,6 +1,6 @@
 class BansController < ApplicationController
   def index
-    @bans = Ban.includes(:user, :creator).paginate(params)
+    @bans = Ban.with_user_and_creator.paginate(params)
     self.new
   end
 
