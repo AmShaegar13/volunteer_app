@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '~> 4.2.0'
-gem 'mysql2'
+gem 'sqlite3', "~> 1.3"
 gem 'activeresource'
 gem 'responders', '~> 2.0'
 
@@ -10,7 +10,7 @@ gem 'responders', '~> 2.0'
 gem 'jquery-rails'
 gem 'jquery-ui-rails'
 
-gem 'yap', '~> 0.3.0'
+gem 'yap', '~> 1.3'
 
 # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
 gem 'spring', group: :development
