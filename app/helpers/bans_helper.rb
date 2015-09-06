@@ -12,7 +12,7 @@ module BansHelper
   end
 
   def link_to_next_page
-    link_to '>', request.params.update({ page: params[:page].to_i+1 }) unless params[:page].to_i == Ban.with_user_and_creator.last_page(params)
+    link_to '>', request.params.update({ page: params[:page].to_i+1 }) unless params[:page].to_i == Ban.with_user_and_creator.paginate.last_page
   end
 
   def link_to_first_page
@@ -21,6 +21,6 @@ module BansHelper
   end
 
   def link_to_last_page
-    link_to '>>', request.params.update({ page: Ban.with_user_and_creator.last_page(params) }) unless params[:page].to_i == Ban.with_user_and_creator.last_page(params)
+    link_to '>>', request.params.update({ page: Ban.with_user_and_creator.paginate.last_page }) unless params[:page].to_i == Ban.with_user_and_creator.paginate.last_page
   end
 end
