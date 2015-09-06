@@ -10,16 +10,12 @@ class SessionsController < ApplicationController
   def verify
     credentials = params.require(:auth).permit(:login, :password)
     auth = Authentication.new credentials
-    if auth.success? && auth.user[:volunteer]
+    if auth.success?
       authenticate auth.user
     else
       reset_session
-      if auth.success?
-        flash[:error] = 'Permission denied.'
-      else
-        flash[:error] = 'Login failed: %s (%d)' % [auth.error, auth.code]
-        flash[:carry] = credentials['login']
-      end
+      flash[:error] = 'Permission denied.'
+      flash[:carry] = credentials['login']
     end
     redirect_to :root
   end

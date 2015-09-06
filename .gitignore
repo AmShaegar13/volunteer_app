@@ -16,4 +16,5 @@
 /tmp
 
 /.idea
+/spring
 /config/database.yml

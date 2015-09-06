@@ -1,14 +1,14 @@
+require 'digest/sha1'
+
 class Authentication
   attr_accessor :success, :code, :error, :user
 
   def initialize(params)
-    uri = URI.parse(Resources['auth_service']['url'])
-    response = Net::HTTP.post_form uri, params
-    result = JSON(response.body)
-    self.success = result['success']
-    self.code = result['code']
-    self.error = result['error']
-    self.user = HashWithIndifferentAccess.new(result['user'])
+    self.success = params['login'].downcase == 'admin' && Digest::SHA1.hexdigest(params['password']) == ENV['ADMIN_PASSWORD']
+    self.user = {
+      id: 1,
+      name: 'Admin'
+    }
   end
 
   alias_method :success?, :success
