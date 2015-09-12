@@ -11,7 +11,7 @@ class BansController < ApplicationController
   def create
     ban_params = params.require(:ban).permit(:duration, :reason, :link)
     user_params = params.require(:ban).require(:user).permit(:id, :name, :main)
-    region = ban_params[:link].match(/forums\.(.+?)\.leagueoflegends\.com/)[1]
+    region = 'euw'
     user_params.merge!(region: region)
 
     Ban.transaction do
