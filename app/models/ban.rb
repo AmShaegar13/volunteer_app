@@ -1,4 +1,6 @@
 class Ban < ActiveRecord::Base
+  ALLOWED_DURATIONS = [1, 3, 7, 14, 0]
+
   include Yap
 
   belongs_to :user
@@ -11,17 +13,15 @@ class Ban < ActiveRecord::Base
 
   with_options presence: true do |ban|
     ban.validates :duration, inclusion: {
-    in: [1, 3, 7, 14, 0]
+    in: ALLOWED_DURATIONS
     }
     ban.validates :user
     ban.validates :reason
     ban.validates :link, format: {
-    with: %r#http://forums\.(na|euw|eune)\.leagueoflegends\.com/board/showthread.php\?[tp]=\d+.*#
+    with: LINK_REGEXP
     }
     ban.validates :creator
   end
-
-  ALLOWED_DURATIONS = [1, 3, 7, 14, 0]
 
   def self.map_name_to_column(name)
     case name
