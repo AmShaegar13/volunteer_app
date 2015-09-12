@@ -5,10 +5,7 @@ class Authentication
 
   def initialize(params)
     self.success = params['login'].downcase == 'admin' && Digest::SHA1.hexdigest(params['password']) == ENV['ADMIN_PASSWORD']
-    self.user = {
-      id: 1,
-      name: 'Admin'
-    }
+    self.user = ToolUser.first
   end
 
   alias_method :success?, :success
