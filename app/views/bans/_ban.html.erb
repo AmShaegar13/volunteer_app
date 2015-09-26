@@ -3,7 +3,7 @@
 <tr class="<%= active %>" style="background-color: <%= color_by_duration(ban.duration) %>">
   <td><%= link_to user.name, user %></td>
   <td><%= user.region %></td>
-  <td><%= link_to ban.reason, ban.link, :target => '_blank' %></td>
+  <td><%= ban.link.blank? ? ban.reason : link_to(ban.reason, ban.link, :target => '_blank') %></td>
   <td><%= format_duration ban.duration %></td>
   <td><%= ban.permanent? ? 'never' : ban.ends %></td>
   <td><%= ban.creator.name %></td>

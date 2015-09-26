@@ -3,7 +3,7 @@
   <td>
     <%= form.select :duration, options_for_select(
         [['1 day', 1], ['3 days', 3], ['7 days', 7], ['14 days', 14], [:perma, 0]],
-        @user && !@user.bans.empty? ? @user.bans.last.next_duration : 1
+        @user && !@user.bans.empty? ? @user.bans.last.next_duration : 0
     ) %>
   </td>
 </tr>
@@ -24,7 +24,7 @@
   </td>
 </tr>
 <tr>
-  <td>Forum link</td><td><%= form.text_field :link %></td>
+  <td>Link</td><td><%= form.text_field :link, placeholder: '(optional)' %></td>
 </tr>
 <tr>
   <td>Submit</td><td><%= form.submit 'Create' %></td>

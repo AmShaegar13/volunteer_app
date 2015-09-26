@@ -13,15 +13,15 @@ class Ban < ActiveRecord::Base
 
   with_options presence: true do |ban|
     ban.validates :duration, inclusion: {
-    in: ALLOWED_DURATIONS
+      in: ALLOWED_DURATIONS
     }
     ban.validates :user
     ban.validates :reason
-    ban.validates :link, format: {
-    with: LINK_REGEXP
-    }
     ban.validates :creator
   end
+  validates :link, allow_blank: true, format: {
+    with: LINK_REGEXP
+  }
 
   def self.map_name_to_column(name)
     case name
