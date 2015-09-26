@@ -2,7 +2,7 @@ source 'https://rubygems.org'
 
 
 gem 'rails', '~> 4.2.0'
-gem 'sqlite3', "~> 1.3"
+gem 'mysql2', '~> 0.3.0'
 gem 'activeresource'
 gem 'responders', '~> 2.0'
 
